@@ -1,39 +1,143 @@
--- [[ ANAS HUB V14 - COMMERCIAL HWID LOCK SYSTEM ]] --
+-- [[ ANAS HUB V15 - COMMERCIAL HWID LOCK FIXED ]] --
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-local HttpService = game:GetService("HttpService")
-local TeleportService = game:GetService("TeleportService")
 
--- [[ وەرگرتنا ناسنامەیا مۆبایل یا کڕیاری (HWID) ]] --
+-- ناسنامەیا مۆبایل یا کڕیاری
 local UserHWID = game:GetService("RbxAnalyticsService"):GetClientId()
 
--- [[ 📊 داتابەیسا کلیلان و مۆبایلان - HWID DATABASE ]] --
--- تێبینی: کاتێ کڕیارێ نوو سکرێپتێ دکڕیت، تو HWID یا وی دگۆڕی ل جهێ "EMPTY_HWID"
-local KeyDatabase = {
-    ["ANAS_VIP_999"] = "EMPTY_HWID", -- کلیل یا ئامادەیە بۆ کڕیارێ ئێکێ
-    ["KEY_BUYER_02"] = "EMPTY_HWID", -- کلیل بۆ کڕیارێ دووێ
-    ["ANAS_GOLD_77"] = "EMPTY_HWID"  -- کلیل بۆ کڕیارێ سێیێ
+-- [[ 🔑 لیستا کلیلێن فەرمی یێن تە دڤێت بفرۆشی ]] --
+local ValidKeys = {
+    ["ANAS_VIP_999"] = true,
+    ["KEY_BUYER_02"] = true,
+    ["ANAS_GOLD_77"] = true
 }
 
--- [[ سیستەمێ پشکنینا کلیلێ و مۆبایلێ ]] --
-local KeyValidated = false
-local function VerifyKeyAndDevice(EnteredKey)
-    -- پشکنین کا کلیل د داتابەیسی دا هەیە یان نە
-    if KeyDatabase[EnteredKey] then
-        -- ئەگەر کلیل یا نوو بیت و چو مۆبایل پێ ڤە نەهاتبیتە گرێدان:
-        if KeyDatabase[EnteredKey] == "EMPTY_HWID" then
-            KeyDatabase[EnteredKey] = UserHWID -- ئێکسەر کلیل ب ڤێ مۆبایلێ ڤە گرێدە!
-            KeyValidated = true
-            return true
-        -- ئەگەر کلیل بەری نوکە هاتبیتە گرێدان، پشکنین بکە کا ئەڤە هەمان مۆبایلە یان نە:
-        elseif KeyDatabase[EnteredKey] == UserHWID then
-            KeyValidated = true
+-- [[ 🛡️ سیستەمێ جێگیر یێ پاراستنا مۆبایلێ (HWID Storage Fix) ]] --
+local function CheckDeviceLock(EnteredKey)
+    if not ValidKeys[EnteredKey] then
+        return false, "ERROR: Invalid Key! (کلیل خەلەتە)"
+    end
+
+    local fileName = "AnasHub_Lock_" .. EnteredKey .. ".txt"
+    
+    -- ئەگەر ئەڤ کلیلە بەری نوکە ل سەر مۆبایلەکێ هاتبیتە خەزنکرن
+    if isfile(fileName) then
+        local savedHWID = readfile(fileName)
+        if savedHWID == UserHWID then
             return true
         else
-            -- ئەگەر کلیل د مۆبایلەکا دی دا هاتبیتە بکارئینان:
-            return false, "ERROR: This key is already locked to another device!"
+            return false, "ERROR: This key is locked to another device! (ئەڤ کلیلە ل سەر مۆبایلەکا دی یا قفلکرییە)"
         end
     else
-        return false, "ERROR: Invalid Key!"
+        -- ئەگەر جارا ئێکێ بیت کڕیار کلیلێ بکاربینیت، ئێکسەر مۆبایلا وی قفل بکە ب ڤێ کلیلێ ڤە!
+        writefile(fileName, UserHWID)
+        return true
+    end
+end
+
+-- [[ دروستکرنا پەنجەرەیا کلیلێ ]] --
+local Window = Rayfield:CreateWindow({
+   Name = "✨🔮 ANAS HUB V15 - HWID SECURE 🔮✨",
+   LoadingTitle = "🔒 FIXED DEVICE LOCK SYSTEM 🔒",
+   LoadingSubtitle = "👑 Created by Anas 👑",
+   Theme = "Ocean",
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false,
+   
+   KeySystem = true,
+   KeySettings = {
+      Title = "🔑 Anas Hub v15 - Device Verification",
+      Subtitle = "کلیل تەنێ ل سەر ١ مۆبایل کار دکەت",
+      Note = "Your HWID: " .. UserHWID,
+      FileName = "AnasHubKeySecureV15", 
+      SaveKey = true, 
+      GrabKeyFromUrl = false,
+      Key = {"ANAS_VIP_999", "KEY_BUYER_02", "ANAS_GOLD_77"}, -- کلیل ل ڤێرە ژی دابنێ
+      CustomHandler = function(Key)
+         local success, message = CheckDeviceLock(Key)
+         if not success then
+            game.Players.LocalPlayer:Kick("\n[ANAS HUB SECURITY]\n" .. message)
+         end
+         return success
+      end
+   }
+})
+
+-----------------------------------------------------------
+-- [ 🏆 NITRO AUTO WIN ] --
+-----------------------------------------------------------
+local AutoWinTab = Window:CreateTab("🏆 NITRO AUTO WIN", 4483345998)
+
+AutoWinTab:CreateButton({
+   Name = "✨ Teleport to Stage 12",
+   Callback = function()
+        local player = game.Players.LocalPlayer
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local found = false
+            for _, v in pairs(workspace:GetDescendants()) do
+                if (v.Name == "12" or v.Name == "Stage12" or v.Name == "Stage 12") and v:IsA("BasePart") then
+                    player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
+                    found = true
+                    break
+                end
+            end
+            if found then
+                Rayfield:Notify({Title = "ANAS HUB", Content = "Warped to Stage 12! 👑", Duration = 3})
+            end
+        end
+   end,
+})
+
+local autowinning = false
+AutoWinTab:CreateToggle({
+   Name = "🔥 Auto Win Loop (Stages 1 to 12)",
+   CurrentValue = false,
+   Flag = "AutoWinHwidFlag",
+   Callback = function(Value)
+        autowinning = Value
+        task.spawn(function()
+            while autowinning do
+                local player = game.Players.LocalPlayer
+                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                    for i = 1, 12 do
+                        if not autowinning then break end
+                        for _, v in pairs(workspace:GetDescendants()) do
+                            if v.Name == tostring(i) and v:IsA("BasePart") then
+                                player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
+                                task.wait(0.4)
+                                break
+                            end
+                        end
+                    end
+                end
+                task.wait(1)
+            end
+        end)
+   end,
+})
+
+-----------------------------------------------------------
+-- [ 🚀 SPEED & POWER ] --
+-----------------------------------------------------------
+local PlayerTab = Window:CreateTab("🚀 SPEED & POWER", 4483345998)
+
+PlayerTab:CreateButton({
+   Name = "⚡ Set WalkSpeed (60)",
+   Callback = function()
+        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60
+        end
+   end,
+})
+
+PlayerTab:CreateButton({
+   Name = "🚀 Set JumpPower (120)",
+   Callback = function()
+        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+            game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120
+            game.Players.LocalPlayer.Character.Humanoid.UseJumpPower = true
+        end
+   end,
+})
     end
 end
 
