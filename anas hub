@@ -1,64 +1,32 @@
--- [[ ANAS HUB V15 - COMMERCIAL HWID LOCK FIXED ]] --
+-- [[ ANAS HUB V16 - COMMERCIAL STABILIZED KEY SYSTEM ]] --
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
--- ناسنامەیا مۆبایل یا کڕیاری
-local UserHWID = game:GetService("RbxAnalyticsService"):GetClientId()
-
--- [[ 🔑 لیستا کلیلێن فەرمی یێن تە دڤێت بفرۆشی ]] --
-local ValidKeys = {
-    ["ANAS_VIP_999"] = true,
-    ["KEY_BUYER_02"] = true,
-    ["ANAS_GOLD_77"] = true
-}
-
--- [[ 🛡️ سیستەمێ جێگیر یێ پاراستنا مۆبایلێ (HWID Storage Fix) ]] --
-local function CheckDeviceLock(EnteredKey)
-    if not ValidKeys[EnteredKey] then
-        return false, "ERROR: Invalid Key! (کلیل خەلەتە)"
-    end
-
-    local fileName = "AnasHub_Lock_" .. EnteredKey .. ".txt"
-    
-    -- ئەگەر ئەڤ کلیلە بەری نوکە ل سەر مۆبایلەکێ هاتبیتە خەزنکرن
-    if isfile(fileName) then
-        local savedHWID = readfile(fileName)
-        if savedHWID == UserHWID then
-            return true
-        else
-            return false, "ERROR: This key is locked to another device! (ئەڤ کلیلە ل سەر مۆبایلەکا دی یا قفلکرییە)"
-        end
-    else
-        -- ئەگەر جارا ئێکێ بیت کڕیار کلیلێ بکاربینیت، ئێکسەر مۆبایلا وی قفل بکە ب ڤێ کلیلێ ڤە!
-        writefile(fileName, UserHWID)
-        return true
-    end
-end
-
--- [[ دروستکرنا پەنجەرەیا کلیلێ ]] --
 local Window = Rayfield:CreateWindow({
-   Name = "✨🔮 ANAS HUB V15 - HWID SECURE 🔮✨",
-   LoadingTitle = "🔒 FIXED DEVICE LOCK SYSTEM 🔒",
+   Name = "✨🔮 ANAS HUB V16 - KEYBOARD ESCAPE 🔮✨",
+   LoadingTitle = "🔒 COMMERCIAL PREMIUM EDITION 🔒",
    LoadingSubtitle = "👑 Created by Anas 👑",
    Theme = "Ocean",
    DisableRayfieldPrompts = false,
    DisableBuildWarnings = false,
    
+   -- [[ 🔑 سیستەمێ کلیلێ یێ فەرمی و جێگیر یێ لایبرەریێ 🔑 ]] --
    KeySystem = true,
    KeySettings = {
-      Title = "🔑 Anas Hub v15 - Device Verification",
-      Subtitle = "کلیل تەنێ ل سەر ١ مۆبایل کار دکەت",
-      Note = "Your HWID: " .. UserHWID,
-      FileName = "AnasHubKeySecureV15", 
-      SaveKey = true, 
+      Title = "🔑 Anas Hub v16 - Verification",
+      Subtitle = "سکرێپت یا پاراستییە! کلیلێ ژ ئەنەسی وەربگرە",
+      Note = "🔑 کلیل تەنێ بۆ ئەو کەسایە یێن کو سکرێپت کڕینە ب 5$",
+      FileName = "AnasHubKeyV16", 
+      SaveKey = true, -- کلیل د مۆبایلا کڕیاری دا پاشکەفت دبیت دا هەر جار نەنووسیتەوە
       GrabKeyFromUrl = false,
-      Key = {"ANAS_VIP_999", "KEY_BUYER_02", "ANAS_GOLD_77"}, -- کلیل ل ڤێرە ژی دابنێ
-      CustomHandler = function(Key)
-         local success, message = CheckDeviceLock(Key)
-         if not success then
-            game.Players.LocalPlayer:Kick("\n[ANAS HUB SECURITY]\n" .. message)
-         end
-         return success
-      end
+      
+      -- 📊 ل ڤێرە تو دشێی کلیلان بۆ کڕیارێن خۆ دیار بکەی:
+      -- بۆ نموونە تو دشێی ناڤێ کڕیاری بکەی کلیل وەک: ANAS_ANWAR12
+      Key = {
+         "ANAS_VIP_999", 
+         "ANAS_PREMIUM_5USD", 
+         "KEY_BUYER_03",
+         "ANAS_KEY_XYZ"
+      }
    }
 })
 
@@ -82,6 +50,8 @@ AutoWinTab:CreateButton({
             end
             if found then
                 Rayfield:Notify({Title = "ANAS HUB", Content = "Warped to Stage 12! 👑", Duration = 3})
+            else
+                Rayfield:Notify({Title = "ANAS HUB", Content = "Stage 12 not found! Move closer.", Duration = 3})
             end
         end
    end,
@@ -136,232 +106,5 @@ PlayerTab:CreateButton({
             game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120
             game.Players.LocalPlayer.Character.Humanoid.UseJumpPower = true
         end
-   end,
-})
-    end
-end
-
--- [[ دروستکرنا پەنجەرەیا کلیلێ ]] --
-local Window = Rayfield:CreateWindow({
-   Name = "✨🔮 ANAS HUB V14 - HWID SECURE 🔮✨",
-   LoadingTitle = "🔒 HARDWARE DEVICE LOCK ACTIVE 🔒",
-   LoadingSubtitle = "👑 Created by Anas 👑",
-   Theme = "Ocean",
-   DisableRayfieldPrompts = false,
-   DisableBuildWarnings = false,
-   
-   KeySystem = true,
-   KeySettings = {
-      Title = "🔑 Anas Hub v14 - Device Lock Verification",
-      Subtitle = "کلیل تەنێ ل سەر ١ مۆبایل کار دکەت!",
-      Note = "HWID ID: " .. UserHWID, -- بۆ هندێ کڕیار ناسنامەیا مۆبایلا خۆ بۆ تە بنووسیت
-      FileName = "AnasHubHwidSecure", 
-      SaveKey = true, 
-      GrabKeyFromUrl = false,
-      -- پشکنینا ڕاستەوخۆ کاتێ کڕیار کلیلێ دەنێت
-      Key = {"ANAS_VIP_999", "KEY_BUYER_02", "ANAS_GOLD_77"},
-      CustomHandler = function(Key)
-         local success, message = VerifyKeyAndDevice(Key)
-         if not success and message then
-            -- ئەگەر کلیل یا دزراو بیت یان ل سەر مۆبایلەکا دی کار بکەت، یاریزان دێ هێتە دەرکرن (Kick)
-            game.Players.LocalPlayer:Kick("\n[ANAS HUB SECURITY]\n" .. message)
-         end
-         return success
-      end
-   }
-})
-
------------------------------------------------------------
--- [ 🏆 NITRO AUTO WIN ] --
------------------------------------------------------------
-local AutoWinTab = Window:CreateTab("🏆 NITRO AUTO WIN", 4483345998)
-
-AutoWinTab:CreateButton({
-   Name = "✨ Teleport to Stage 12",
-   Callback = function()
-        local player = game.Players.LocalPlayer
-        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            local found = false
-            for _, v in pairs(workspace:GetDescendants()) do
-                if (v.Name == "12" or v.Name == "Stage12" or v.Name == "Stage 12") and v:IsA("BasePart") then
-                    player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                    found = true
-                    break
-                end
-            end
-            if found then
-                Rayfield:Notify({Title = "ANAS HUB", Content = "Warped to Stage 12! 👑", Duration = 3})
-            end
-        end
-   end,
-})
-
-local autowinning = false
-AutoWinTab:CreateToggle({
-   Name = "🔥 Auto Win Loop (Stages 1 to 12)",
-   CurrentValue = false,
-   Flag = "AutoWinHwidFlag",
-   Callback = function(Value)
-        autowinning = Value
-        task.spawn(function()
-            while autowinning do
-                local player = game.Players.LocalPlayer
-                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    for i = 1, 12 do
-                        if not autowinning then break end
-                        for _, v in pairs(workspace:GetDescendants()) do
-                            if v.Name == tostring(i) and v:IsA("BasePart") then
-                                player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                                task.wait(0.4)
-                                break
-                            end
-                        end
-                    end
-                end
-                task.wait(1)
-            end
-        end)
-   end,
-})
-
------------------------------------------------------------
--- [ 🚀 SPEED & POWER ] --
------------------------------------------------------------
-local PlayerTab = Window:CreateTab("🚀 SPEED & POWER", 4483345998)
-
-PlayerTab:CreateButton({
-   Name = "⚡ Set WalkSpeed (60)",
-   Callback = function()
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60
-        end
-   end,
-})
-
-PlayerTab:CreateButton({
-   Name = "🚀 Set JumpPower (120)",
-   Callback = function()
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-            game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120
-            game.Players.LocalPlayer.Character.Humanoid.UseJumpPower = true
-        end
-   end,
-})
-               Duration = 3,
-               Image = 4483345998,
-            })
-        else
-            -- ئەگەر ناڤێ پارتێ ١٢ جیاواز بوو، سیستەم دێ ب ڕێکا گەڕیانێ دۆزیتەوە
-            local found = false
-            for _, v in pairs(workspace:GetDescendants()) do
-                if v.Name == "12" and v:IsA("BasePart") then
-                    player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                    found = true
-                    break
-                end
-            end
-            if not found then
-                Rayfield:Notify({Title = "ANAS HUB", Content = "Stage 12 part not found, try moving closer!", Duration = 3})
-            end
-        end
-   end,
-})
-
--- فەرمانا ئۆتۆماتیک سەرکەفتن د ناڤبەرا ستەیجان دا (Loop)
-local autowinning = false
-AutoWinTab:CreateToggle({
-   Name = "🔥 ┃ AUTO WIN LOOP (STAGES 1 TO 12)",
-   CurrentValue = false,
-   Flag = "AutoWinLoopFlag",
-   Callback = function(Value)
-        autowinning = Value
-        task.spawn(function()
-            while autowinning do
-                local player = game.Players.LocalPlayer
-                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    -- سیستەم دێ ژ ستەیجێ ١ دەستپێکەت هەتا ١٢
-                    for i = 1, 12 do
-                        if not autowinning then break end
-                        
-                        local targetStage = workspace:FindFirstChild(tostring(i)) or workspace.Stages:FindFirstChild(tostring(i))
-                        if targetStage and targetStage:IsA("BasePart") then
-                            player.Character.HumanoidRootPart.CFrame = targetStage.CFrame + Vector3.new(0, 3, 0)
-                            task.wait(0.5) -- دەمێ چەرمەسەریێ د ناڤبەرا ستەیجان دا دا یاری کراش نەکەت
-                        else
-                            -- گەڕیانا گشتی ئەگەر د فۆڵدەرەکێ دی دا بن
-                            for _, v in pairs(workspace:GetDescendants()) do
-                                if v.Name == tostring(i) and v:IsA("BasePart") then
-                                    player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                                    task.wait(0.5)
-                                    break
-                                end
-                            end
-                        end
-                    end
-                end
-                task.wait(1)
-            end
-        end)
-   end,
-})
-
------------------------------------------------------------
--- [ 🚀 بەشێ یاریزانی - NITRO PLAYER TAB ] --
------------------------------------------------------------
-local PlayerTab = Window:CreateTab("🚀 SPEED & POWER", 4483345998)
-
-PlayerTab:CreateButton({
-   Name = "⚡ ┃ ACTIVATE NITRO SPEED (60)",
-   Interact = '💥 CLICK 💥',
-   Callback = function()
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60
-        end
-   end,
-})
-
-PlayerTab:CreateButton({
-   Name = "🌌 ┃ HYPER JUMP POWER (120)",
-   Interact = '💥 CLICK 💥',
-   Callback = function()
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-            game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120
-            game.Players.LocalPlayer.Character.Humanoid.UseJumpPower = true
-        end
-   end,
-})
-
-local noclip = false
-PlayerTab:CreateToggle({
-   Name = "👻 ┃ GOD-MODE NOCLIP (WALL HACK)",
-   CurrentValue = false,
-   Flag = "NitroNoclip",
-   Callback = function(Value)
-        noclip = Value
-        game:GetService("RunService").Stepped:Connect(function()
-            if noclip and game.Players.LocalPlayer.Character then
-                for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                    if v:IsA("BasePart") then v.CanCollide = false end
-                end
-            end
-        end)
-   end,
-})
-
------------------------------------------------------------
--- [ 🤖 بەشێ پاراستنێ - ANTI-BAN SECURE ] --
------------------------------------------------------------
-local AutoTab = Window:CreateTab("🛡️ ANTI-BAN SECURE", 4483345998)
-
-AutoTab:CreateButton({
-   Name = "💎 ┃ ACTIVATE ANTI-AFK (ANTI-KICK)",
-   Interact = '🔒 SECURE 🔒',
-   Callback = function()
-        local vu = game:GetService("VirtualUser")
-        game.Players.LocalPlayer.Idled:Connect(function()
-            vu:Button2Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
-            task.wait(1)
-            vu:Button2Up(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
-        end)
    end,
 })
