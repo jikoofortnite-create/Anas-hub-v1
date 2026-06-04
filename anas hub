@@ -1,92 +1,98 @@
--- [[ ANAS HUB V27.5 - THE ULTIMATE FULL SCRIPT ]] --
--- [[ FEATURES: MAGNET, NOCLIP, AUTO-KILL, ESP, SERVER-JOIN, IDENTITY PROTECTION ]] --
+-- [[ ANAS HUB V27.7 - THE COMPLETE ULTIMATE EDITION ]] --
+-- [[ FEATURES: MAGNET, NOCLIP, AUTO-KILL, ESP, SERVER-JOIN, AUTO-REPAIR, IDENTITY PROTECTION ]] --
 
-if game:GetService("CoreGui"):FindFirstChild("AnasHubPremium") then
-    game:GetService("CoreGui").AnasHubPremium:Destroy()
-end
-
--- [ 1. IDENTITY PROTECTION (NO EARRINGS & HANDS IN SHORTS) ] --
-task.spawn(function()
-    while task.wait(1) do
-        local char = game.Players.LocalPlayer.Character
-        if char then
-            for _, item in pairs(char:GetDescendants()) do
-                if item.Name:lower():find("earring") then item:Destroy() end
-            end
-            if char:FindFirstChild("Animate") then
-                char.Animate.idle.Animation1.AnimationId = "rbxassetid://507766388"
-                char.Animate.idle.Animation2.AnimationId = "rbxassetid://507766388"
-            end
-        end
-    end
-end)
-
--- [ 2. GUI SETUP ] --
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 local ScreenGui = Instance.new("ScreenGui", game:GetService("CoreGui"))
 local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Size, MainFrame.Position, MainFrame.BackgroundColor3 = UDim2.new(0, 450, 0, 400), UDim2.new(0.3, 0, 0.25, 0), Color3.fromRGB(15, 15, 20)
+MainFrame.Size, MainFrame.Position, MainFrame.BackgroundColor3 = UDim2.new(0, 450, 0, 500), UDim2.new(0.3, 0, 0.2, 0), Color3.fromRGB(15, 15, 20)
 Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 14)
 
-local function CreateButton(name, pos, func)
+-- [ TOGGLE SYSTEM ] --
+local function CreateToggle(name, pos, callback)
+    local Enabled = false
     local Btn = Instance.new("TextButton", MainFrame)
-    Btn.Size, Btn.Position, Btn.Text = UDim2.new(0, 400, 0, 40), UDim2.new(0, 25, 0, pos), name
-    Btn.MouseButton1Click:Connect(func)
-    return Btn
+    Btn.Size, Btn.Position, Btn.Text = UDim2.new(0, 400, 0, 40), UDim2.new(0, 25, 0, pos), name .. ": OFF"
+    Btn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    Btn.MouseButton1Click:Connect(function()
+        Enabled = not Enabled
+        Btn.Text = name .. (Enabled and ": ON" or ": OFF")
+        Btn.BackgroundColor3 = Enabled and Color3.fromRGB(50, 200, 50) or Color3.fromRGB(200, 50, 50)
+        callback(Enabled)
+    end)
 end
 
--- [ 3. FUNCTIONS ] --
-CreateButton("⚔️ LEGIT AUTO-KILL", 50, function()
-    task.spawn(function()
-        while task.wait(0.3) do
-            local myChar = game.Players.LocalPlayer.Character
-            local knife = myChar and (myChar:FindFirstChild("Knife") or myChar:FindFirstChildOfClass("Tool"))
-            if myChar and knife then
-                local closest = nil local dist = 350
-                for _, p in pairs(game.Players:GetPlayers()) do
-                    if p ~= game.Players.LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
-                        local d = (p.Character.HumanoidRootPart.Position - myChar.HumanoidRootPart.Position).Magnitude
-                        if d < dist then dist = d closest = p.Character end
-                    end
+-- [ LOGICS ] --
+local States = {Kill = false, Esp = false, Magnet = false, Noclip = false, Repair = false}
+
+CreateToggle("⚔️ AUTO-KILL", 50, function(v) States.Kill = v 
+    task.spawn(function() while States.Kill and task.wait(0.3) do
+        local char = LocalPlayer.Character
+        local tool = char and (char:FindFirstChild("Knife") or char:FindFirstChildOfClass("Tool"))
+        if char and tool then
+            local closest, dist = nil, 350
+            for _, p in pairs(Players:GetPlayers()) do
+                if p ~= LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+                    local d = (p.Character.HumanoidRootPart.Position - char.HumanoidRootPart.Position).Magnitude
+                    if d < dist then dist = d closest = p.Character end
                 end
-                if closest then myChar.Humanoid:MoveTo(closest.HumanoidRootPart.Position) if dist < 12 then knife:Activate() end end
+            end
+            if closest then char.Humanoid:MoveTo(closest.HumanoidRootPart.Position) if dist < 12 then tool:Activate() end end
+        end
+    end)
+end)
+
+CreateToggle("👁️ SMART ESP", 100, function(v) States.Esp = v
+    task.spawn(function() while States.Esp and task.wait(1) do
+        for _, p in pairs(Players:GetPlayers()) do
+            if p ~= LocalPlayer and p.Character then
+                local h = p.Character:FindFirstChild("AnasHubESP") or Instance.new("Highlight", p.Character)
+                h.Name = "AnasHubESP" h.FillColor = (p.Character:FindFirstChild("Knife") and Color3.fromRGB(255,0,0) or Color3.fromRGB(0,255,100))
             end
         end
     end)
 end)
 
-CreateButton("👁️ SMART ESP (RED/GREEN)", 100, function()
-    for _, p in pairs(game.Players:GetPlayers()) do
-        if p ~= game.Players.LocalPlayer and p.Character then
-            local h = p.Character:FindFirstChild("AnasHubESP") or Instance.new("Highlight", p.Character)
-            h.Name = "AnasHubESP" 
-            h.FillColor = (p.Character:FindFirstChild("Knife") and Color3.fromRGB(255,0,0) or Color3.fromRGB(0,255,100))
+CreateToggle("🧲 MAGNET", 150, function(v) States.Magnet = v
+    task.spawn(function() while States.Magnet and task.wait(0.5) do
+        for _, item in pairs(workspace:GetDescendants()) do
+            if item:IsA("Tool") and item:FindFirstChild("Handle") then item.Handle.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame end
         end
+    end)
+end)
+
+CreateToggle("👻 GHOST MODE", 200, function(v) States.Noclip = v
+    game:GetService("RunService").Stepped:Connect(function()
+        if States.Noclip and LocalPlayer.Character then 
+            for _, p in pairs(LocalPlayer.Character:GetChildren()) do if p:IsA("BasePart") then p.CanCollide = false end end 
+        end
+    end)
+end)
+
+CreateToggle("⚙️ AUTO REPAIR", 250, function(v) States.Repair = v
+    task.spawn(function() while States.Repair and task.wait(0.5) do
+        for _, obj in pairs(workspace:GetDescendants()) do
+            if obj:IsA("Model") and (obj.Name:find("Generator") or obj.Name:find("Repair")) then
+                local prompt = obj:FindFirstChildWhichIsA("ProximityPrompt", true)
+                if prompt then fireproximityprompt(prompt) end
+            end
+        end
+    end)
+end)
+
+-- [ SERVER JOIN ] --
+local JoinBtn = Instance.new("TextButton", MainFrame)
+JoinBtn.Size, JoinBtn.Position, JoinBtn.Text = UDim2.new(0, 400, 0, 40), UDim2.new(0, 25, 0, 350), "🌍 JOIN NEAR-START SERVER"
+JoinBtn.MouseButton1Click:Connect(function()
+    local s = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?limit=100"))
+    if s and s.data then game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, s.data[1].id, LocalPlayer) end
+end)
+
+-- [ IDENTITY PROTECTION ] --
+task.spawn(function() while task.wait(1) do
+    local char = LocalPlayer.Character
+    if char then
+        for _, item in pairs(char:GetDescendants()) do if item.Name:lower():find("earring") then item:Destroy() end end
+        if char:FindFirstChild("Animate") then char.Animate.idle.Animation1.AnimationId = "rbxassetid://507766388" end
     end
 end)
-
-CreateButton("🧲 MAGNET ITEMS", 150, function()
-    task.spawn(function()
-        while task.wait(0.5) do
-            for _, item in pairs(workspace:GetDescendants()) do
-                if item:IsA("Tool") and item:FindFirstChild("Handle") then
-                    item.Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                end
-            end
-        end
-    end)
-end)
-
-CreateButton("👻 GHOST MODE (NOCLIP)", 200, function()
-    game:GetService("RunService").Stepped:Connect(function()
-        for _, p in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-            if p:IsA("BasePart") then p.CanCollide = false end
-        end
-    end)
-end)
-
-CreateButton("🌍 JOIN NEAR-START SERVER", 250, function()
-    local s = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?limit=100"))
-    if s and s.data then game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, s.data[1].id, game.Players.LocalPlayer) end
-end)
-
-print("ANAS HUB V27.5 LOADED SUCCESSFULLY")
