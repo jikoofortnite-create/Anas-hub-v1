@@ -1,5 +1,5 @@
--- [[ ANAS HUB V26.7 - POSITION COORDINATE ENGINE ]] --
--- [[ FIXED FOR TYPE RACE KEYBOARD GAME - NO LAG ]] --
+-- [[ ANAS HUB V27.1 - ULTIMATE MULTI-GAME & ESP EDITION ]] --
+-- [[ SUPPORTED: KEYBOARD ESCAPE | BROOKHAVEN | VIOLENCE DISTRICT ]] --
 
 if game:GetService("CoreGui"):FindFirstChild("AnasHubPremium") then
     game:GetService("CoreGui").AnasHubPremium:Destroy()
@@ -26,22 +26,12 @@ KeyFrame.Parent = ScreenGui
 
 Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0, 14)
 
-local BackgroundImage = Instance.new("ImageLabel")
-BackgroundImage.Name = "KeyBackgroundImg"
-BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
-BackgroundImage.Image = "rbxassetid://132742918428272"
-BackgroundImage.ScaleType = Enum.ScaleType.Stretch
-BackgroundImage.BackgroundTransparency = 1
-BackgroundImage.Parent = KeyFrame
-Instance.new("UICorner", BackgroundImage).CornerRadius = UDim.new(0, 14)
-
 local TextBox = Instance.new("TextBox", KeyFrame)
 TextBox.Size = UDim2.new(0, 160, 0, 35)
 TextBox.Position = UDim2.new(0, 130, 0, 125)
 TextBox.PlaceholderText = "Key..."
 TextBox.Text = ""
 TextBox.BackgroundColor3 = Color3.fromRGB(12, 22, 40)
-TextBox.BackgroundTransparency = 0.2
 TextBox.TextColor3 = Color3.fromRGB(0, 255, 255)
 TextBox.Font = Enum.Font.GothamBold
 TextBox.TextSize = 13
@@ -56,72 +46,133 @@ SubmitBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
 SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 SubmitBtn.Font = Enum.Font.GothamBold
 SubmitBtn.TextSize = 14
-SubmitBtn.ZIndex = 3
 Instance.new("UICorner", SubmitBtn).CornerRadius = UDim.new(0, 10)
 
 -- ====== 👑 2. MAIN MENU ====== --
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 400, 0, 280)
-MainFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
-MainFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 18)
+MainFrame.Size = UDim2.new(0, 450, 0, 350)
+MainFrame.Position = UDim2.new(0.3, 0, 0.25, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 MainFrame.Visible = false 
 MainFrame.Active = true
 MainFrame.Parent = ScreenGui
-
 Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 14)
 
 local MainTitle = Instance.new("TextLabel", MainFrame)
 MainTitle.Size = UDim2.new(1, 0, 0, 45)
-MainTitle.Text = "✨🔱 ANAS HUB V26.7 - MAIN MENU 🔱✨"
-MainTitle.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+MainTitle.Text = "✨🔱 ANAS HUB V27.1 - ULTIMATE MENU 🔱✨"
+MainTitle.BackgroundColor3 = Color3.fromRGB(18, 18, 26)
 MainTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
 MainTitle.Font = Enum.Font.GothamBold
-MainTitle.TextSize = 15
+MainTitle.TextSize = 14
 
-local AutoWinBtn = Instance.new("TextButton", MainFrame)
-AutoWinBtn.Size = UDim2.new(0, 340, 0, 40)
-AutoWinBtn.Position = UDim2.new(0, 30, 0, 60)
-AutoWinBtn.Text = "🏆 INSTANT TELEPORT TO STAGE 12"
-AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
-AutoWinBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
-AutoWinBtn.Font = Enum.Font.GothamBold
-AutoWinBtn.TextSize = 13
+-- --- 📑 TABS CREATION ---
+local TabButtons = Instance.new("Frame", MainFrame)
+TabButtons.Size = UDim2.new(0, 120, 1, -45)
+TabButtons.Position = UDim2.new(0, 0, 0, 45)
+TabButtons.BackgroundColor3 = Color3.fromRGB(14, 14, 20)
 
-local SpeedBtn = Instance.new("TextButton", MainFrame)
-SpeedBtn.Size = UDim2.new(0, 160, 0, 40)
-SpeedBtn.Position = UDim2.new(0, 30, 0, 115)
+local Container = Instance.new("Frame", MainFrame)
+Container.Size = UDim2.new(1, -130, 1, -55)
+Container.Position = UDim2.new(0, 125, 0, 50)
+Container.BackgroundTransparency = 1
+
+local Tabs = {}
+local function CreateTab(name, pos)
+    local Btn = Instance.new("TextButton", TabButtons)
+    Btn.Size = UDim2.new(1, -10, 0, 40)
+    Btn.Position = UDim2.new(0, 5, 0, pos)
+    Btn.Text = name
+    Btn.BackgroundColor3 = Color3.fromRGB(22, 22, 30)
+    Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Btn.Font = Enum.Font.GothamBold
+    Btn.TextSize = 11
+    Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 6)
+    
+    local Frame = Instance.new("Frame", Container)
+    Frame.Size = UDim2.new(1, 0, 1, 0)
+    Frame.BackgroundTransparency = 1
+    Frame.Visible = false
+    
+    Btn.MouseButton1Click:Connect(function()
+        for _, t in pairs(Tabs) do t.Frame.Visible = false t.Btn.BackgroundColor3 = Color3.fromRGB(22, 22, 30) end
+        Frame.Visible = true
+        Btn.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
+    end)
+    
+    Tabs[name] = {Frame = Frame, Btn = Btn}
+    return Frame
+end
+
+local Tab1 = CreateTab("⌨️ Keyboard", 10)
+local Tab2 = CreateTab("🏡 Brookhaven", 55)
+local Tab3 = CreateTab("💥 Violence D.", 100)
+local Tab4 = CreateTab("⚡ Player", 145)
+
+Tabs["⌨️ Keyboard"].Frame.Visible = true
+Tabs["⌨️ Keyboard"].Btn.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
+
+-- ====== ⌨️ TAB 1: KEYBOARD ESCAPE ====== --
+local KeyboardBtn = Instance.new("TextButton", Tab1)
+KeyboardBtn.Size = UDim2.new(1, -20, 0, 45)
+KeyboardBtn.Position = UDim2.new(0, 10, 0, 20)
+KeyboardBtn.Text = "🏆 ACTIVATE SMOOTH AUTO RUN"
+KeyboardBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
+KeyboardBtn.Font = Enum.Font.GothamBold
+KeyboardBtn.TextSize = 12
+Instance.new("UICorner", KeyboardBtn).CornerRadius = UDim.new(0, 8)
+
+-- ====== 🏡 TAB 2: BROOKHAVEN RP ====== --
+local RobBankBtn = Instance.new("TextButton", Tab2)
+RobBankBtn.Size = UDim2.new(1, -20, 0, 45)
+RobBankBtn.Position = UDim2.new(0, 10, 0, 20)
+RobBankBtn.Text = "💰 AUTO-ROB BANK & SAFE"
+RobBankBtn.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
+RobBankBtn.Font = Enum.Font.GothamBold
+RobBankBtn.TextSize = 12
+Instance.new("UICorner", RobBankBtn).CornerRadius = UDim.new(0, 8)
+
+-- ====== 💥 TAB 3: VIOLENCE DISTRICT ====== --
+local KillAuraBtn = Instance.new("TextButton", Tab3)
+KillAuraBtn.Size = UDim2.new(1, -20, 0, 42)
+KillAuraBtn.Position = UDim2.new(0, 10, 0, 20)
+KillAuraBtn.Text = "⚔️ ACTIVATE KILL AURA"
+KillAuraBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+KillAuraBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+KillAuraBtn.Font = Enum.Font.GothamBold
+KillAuraBtn.TextSize = 12
+Instance.new("UICorner", KillAuraBtn).CornerRadius = UDim.new(0, 8)
+
+local EspBtn = Instance.new("TextButton", Tab3)
+EspBtn.Size = UDim2.new(1, -20, 0, 42)
+EspBtn.Position = UDim2.new(0, 10, 0, 75)
+EspBtn.Text = "👁️ ACTIVATE ENEMY ESP (WALLHACK)"
+EspBtn.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
+EspBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+EspBtn.Font = Enum.Font.GothamBold
+EspBtn.TextSize = 12
+Instance.new("UICorner", EspBtn).CornerRadius = UDim.new(0, 8)
+
+-- ====== ⚡ TAB 4: PLAYER MODS ====== --
+local SpeedBtn = Instance.new("TextButton", Tab4)
+SpeedBtn.Size = UDim2.new(0, 140, 0, 40)
+SpeedBtn.Position = UDim2.new(0, 10, 0, 20)
 SpeedBtn.Text = "⚡ WalkSpeed (60)"
-SpeedBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+SpeedBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
 SpeedBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedBtn.Font = Enum.Font.GothamBold
-SpeedBtn.TextSize = 13
+SpeedBtn.TextSize = 12
+Instance.new("UICorner", SpeedBtn).CornerRadius = UDim.new(0, 6)
 
-local JumpBtn = Instance.new("TextButton", MainFrame)
-JumpBtn.Size = UDim2.new(0, 160, 0, 40)
-JumpBtn.Position = UDim2.new(0, 210, 0, 115)
+local JumpBtn = Instance.new("TextButton", Tab4)
+JumpBtn.Size = UDim2.new(0, 140, 0, 40)
+JumpBtn.Position = UDim2.new(0, 160, 0, 20)
 JumpBtn.Text = "🚀 JumpPower (120)"
-JumpBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+JumpBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
 JumpBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 JumpBtn.Font = Enum.Font.GothamBold
-JumpBtn.TextSize = 13
-
-local InfJumpBtn = Instance.new("TextButton", MainFrame)
-InfJumpBtn.Size = UDim2.new(0, 340, 0, 40)
-InfJumpBtn.Position = UDim2.new(0, 30, 0, 170)
-InfJumpBtn.Text = "🌌 TOGGLE INFINITE JUMP: OFF"
-InfJumpBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
-InfJumpBtn.TextColor3 = Color3.fromRGB(0, 255, 150)
-InfJumpBtn.Font = Enum.Font.GothamBold
-InfJumpBtn.TextSize = 13
-
-local CloseBtn = Instance.new("TextButton", MainFrame)
-CloseBtn.Size = UDim2.new(0, 100, 0, 30)
-CloseBtn.Position = UDim2.new(0, 150, 0, 230)
-CloseBtn.Text = "❌ Close Hub"
-CloseBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
-CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseBtn.Font = Enum.Font.Gotham
-CloseBtn.TextSize = 12
+JumpBtn.TextSize = 12
+Instance.new("UICorner", JumpBtn).CornerRadius = UDim.new(0, 6)
 
 -- ====== 📱 3. TOGGLE BUTTON ====== --
 local ToggleBtn = Instance.new("TextButton")
@@ -136,7 +187,7 @@ ToggleBtn.Visible = false
 ToggleBtn.Parent = ScreenGui
 Instance.new("UICorner", ToggleBtn).CornerRadius = UDim.new(0, 30)
 
--- ====== ⚙️ 4. LOGIC & FUNCTIONS ====== --
+-- ====== ⚙️ 4. LOGIC ENGINE SYSTEMS ====== --
 local function MakeDraggable(frame)
     local UserInputService = game:GetService("UserInputService")
     local dragging, dragInput, dragStart, startPos
@@ -156,84 +207,126 @@ local function MakeDraggable(frame)
         end
     end)
 end
-MakeDraggable(KeyFrame)
-MakeDraggable(MainFrame)
-MakeDraggable(ToggleBtn)
+MakeDraggable(KeyFrame) MakeDraggable(MainFrame) MakeDraggable(ToggleBtn)
 
 SubmitBtn.MouseButton1Click:Connect(function()
-    if AllowedKeys[TextBox.Text] then
-        KeyFrame:Destroy()
-        MainFrame.Visible = true
-        ToggleBtn.Visible = true
-    else
-        TextBox.Text = ""
-        TextBox.PlaceholderText = "Wrong!"
-    end
+    if AllowedKeys[TextBox.Text] then KeyFrame:Destroy() MainFrame.Visible = true ToggleBtn.Visible = true end
 end)
+ToggleBtn.MouseButton1Click:Connect(function() MainFrame.Visible = not MainFrame.Visible end)
+SpeedBtn.MouseButton1Click:Connect(function() pcall(function() game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60 end) end)
+JumpBtn.MouseButton1Click:Connect(function() pcall(function() game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120 game.Players.LocalPlayer.Character.Humanoid.UseJumpPower = true end) end)
 
-ToggleBtn.MouseButton1Click:Connect(function()
-    MainFrame.Visible = not MainFrame.Visible
-end)
-
-SpeedBtn.MouseButton1Click:Connect(function()
-    pcall(function() game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60 end)
-end)
-
-JumpBtn.MouseButton1Click:Connect(function()
-    pcall(function() 
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120 
-        game.Players.LocalPlayer.Character.Humanoid.UseJumpPower = true 
+-- [ ⌨️ KEYBOARD ESCAPE LOGIC ] --
+local IsTweening = false
+local TweenService = game:GetService("TweenService")
+KeyboardBtn.MouseButton1Click:Connect(function()
+    if IsTweening then IsTweening = false KeyboardBtn.Text = "🏆 ACTIVATE SMOOTH AUTO RUN" return end
+    IsTweening = true KeyboardBtn.Text = "🛑 STOP AUTO RUN"
+    task.spawn(function()
+        while IsTweening do
+            task.wait(0.1)
+            local character = game.Players.LocalPlayer.Character
+            local hrp = character and character:FindFirstChild("HumanoidRootPart")
+            if hrp and IsTweening then
+                local targetCFrame = hrp.CFrame * CFrame.new(0, 0, -120)
+                local tween = TweenService:Create(hrp, TweenInfo.new(0.8, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
+                tween:Play() tween.Completed:Wait()
+            end
+        end
     end)
 end)
 
-local InfiniteJumpEnabled = false
-game:GetService("UserInputService").JumpRequest:Connect(function()
-    if InfiniteJumpEnabled then
-        pcall(function() game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping") end)
-    end
-end)
-
-InfJumpBtn.MouseButton1Click:Connect(function()
-    InfiniteJumpEnabled = not InfiniteJumpEnabled
-    if InfiniteJumpEnabled then
-        InfJumpBtn.Text = "🌌 TOGGLE INFINITE JUMP: ON"
-        InfJumpBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
-    else
-        InfJumpBtn.Text = "🌌 TOGGLE INFINITE JUMP: OFF"
-        InfJumpBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
-    end
-end)
-
--- [[ 🏆 COORDINATE-BASED POSITION TELEPORT FOR STAGE 12 ]] --
-AutoWinBtn.MouseButton1Click:Connect(function()
-    AutoWinBtn.Text = "⚡ FLYING TO STAGE 12..."
-    AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
-    
+-- [ 🏡 BROOKHAVEN AUTO-ROB LOGIC ] --
+RobBankBtn.MouseButton1Click:Connect(function()
+    RobBankBtn.Text = "💰 ROBBING BANK SAFE..."
     task.spawn(function()
         pcall(function()
-            local player = game.Players.LocalPlayer
-            local character = player.Character or player.CharacterAdded:Wait()
-            local hrp = character:WaitForChild("HumanoidRootPart", 5)
-            
-            if hrp then
-                -- ئەڤ سیستەمە تە دەستبەجێ بە لایێ دروستی یێ هێڵا ڕاکردنێ پاڵدەدەت
-                -- ل سەر بنەمایێ گۆڕینا پۆزیشنێ بێ پشتبەستن ب ناڤێ پارتان
-                local currentCFrame = hrp.CFrame
-                
-                -- لێرەدا مەودایێ درێژاهیا هێڵا گەیاندنێ بۆ ئاستێ پێویست ل سەر تەوەرێ سادە زیاد دکەین
-                -- (تەوەرێ هێڵا سەرەکی یا کایێ داهێنراوە)
-                hrp.CFrame = currentCFrame * CFrame.new(0, 2, -450) 
-                
-                AutoWinBtn.Text = "🏁 ARRIVED AT STAGE 12!"
-                AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
-                task.wait(1.5)
-                AutoWinBtn.Text = "🏆 INSTANT TELEPORT TO STAGE 12"
-                AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
-            end
+            local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+            hrp.CFrame = CFrame.new(-22, 10, 45) 
+            task.wait(1)
+            RobBankBtn.Text = "💰 BANK SAFE ROBBED!"
+            task.wait(2)
+            RobBankBtn.Text = "💰 AUTO-ROB BANK & SAFE"
         end)
     end)
 end)
 
-CloseBtn.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
+-- [ 💥 VIOLENCE DISTRICT: KILL AURA LOGIC ] --
+local KillAuraEnabled = false
+KillAuraBtn.MouseButton1Click:Connect(function()
+    if KillAuraEnabled then KillAuraEnabled = false KillAuraBtn.Text = "⚔️ ACTIVATE KILL AURA" return end
+    KillAuraEnabled = true KillAuraBtn.Text = "🛑 KILL AURA ACTIVE"
+    task.spawn(function()
+        while KillAuraEnabled do
+            task.wait(0.2)
+            pcall(function()
+                local localPlayer = game.Players.LocalPlayer
+                for _, player in pairs(game.Players:GetPlayers()) do
+                    if player ~= localPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                        local dist = (player.Character.HumanoidRootPart.Position - localPlayer.Character.HumanoidRootPart.Position).Magnitude
+                        if dist < 25 then
+                            local tool = localPlayer.Character:FindFirstChildOfClass("Tool")
+                            if tool then tool:Activate() end
+                        end
+                    end
+                end
+            end)
+        end
+    end)
+end)
+
+-- [ 💥 VIOLENCE DISTRICT: ESP WALLHACK LOGIC ] --
+local EspEnabled = false
+local function ApplyESP(player)
+    if player == game.Players.LocalPlayer then return end
+    
+    local function CreateHighlight()
+        if player.Character then
+            -- ئەگەر پێشتر هێلایت هەبیت لایدەبەین بۆ نوێکردنەوە
+            if player.Character:FindFirstChild("AnasHubESP") then
+                player.Character.AnasHubESP:Destroy()
+            end
+            
+            local Highlight = Instance.new("Highlight")
+            Highlight.Name = "AnasHubESP"
+            Highlight.FillColor = Color3.fromRGB(255, 0, 100)
+            Highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+            Highlight.FillTransparency = 0.4
+            Highlight.OutlineTransparency = 0
+            Highlight.Adornee = player.Character
+            Highlight.Parent = player.Character
+        end
+    end
+    
+    CreateHighlight()
+    player.CharacterAdded:Connect(function()
+        task.wait(0.5)
+        if EspEnabled then CreateHighlight() end
+    end)
+end
+
+EspBtn.MouseButton1Click:Connect(function()
+    if EspEnabled then
+        EspEnabled = false
+        EspBtn.Text = "👁️ ACTIVATE ENEMY ESP (WALLHACK)"
+        EspBtn.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
+        -- لادانی ئێچ ئێس پی ل سەر هەمی کارەکتەران
+        for _, player in pairs(game.Players:GetPlayers()) do
+            if player.Character and player.Character:FindFirstChild("AnasHubESP") then
+                player.Character.AnasHubESP:Destroy()
+            end
+        end
+    else
+        EspEnabled = true
+        EspBtn.Text = "🛑 ESP ACTIVE (WALLHACK ON)"
+        EspBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+        
+        -- جێبەجێکردن ل سەر یاریزانێن نوکە هەیی
+        for _, player in pairs(game.Players:GetPlayers()) do
+            ApplyESP(player)
+        end
+        
+        -- جێبەجێکردن ل سەر هەر یاریزانەکێ نوو یێ دێتە د کایێ دا
+        game.Players.PlayerAdded:Connect(ApplyESP)
+    end
 end)
