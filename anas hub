@@ -1,67 +1,177 @@
--- [[ ANAS HUB V20 - SECURITY SYSTEM ACTIVE ]] --
--- PROPRIETARY CODE - COPYING OR DISTRIBUTING IS STRICTLY ILLEGAL
-local _ANAS_STORAGE = {
-    [1] = function(s) return (s:gsub('..', function(cc) return string.char(tonumber(cc, 16)) end)) end,
-    [2] = "6c6f63616c20416c6c6f7765644b657973203d207b5b22414e41535f5649505f393939225d203d20747275652c205b22414e41535f5052454d49554d5f35555344225d203d20747275652c205b224b45595f323032365f414e4153225d203d20747275657d2069662067616d652e436f72654775693a46696e6446697273744368696c642822416e61734875625072656d69756d2221207468656e2067616d652e436f72654775692e416e61734875625072656d69756d3a44657374726f79282120656e64"
+-- [[ ANAS HUB V21 - CLEAN & PURE NO ENCRYPTION ]] --
+if game.CoreGui:FindFirstChild("AnasHubPremium") then
+    game.CoreGui.AnasHubPremium:Destroy()
+end
+
+-- [[ 🔑 لیستا کلیلێن فەرمی یێن تە (Allowed Keys) ]] --
+local AllowedKeys = {
+    ["ANAS_VIP_999"] = true,
+    ["ANAS_PREMIUM_5USD"] = true,
+    ["KEY_2026_ANAS"] = true
 }
 
-local _EXECUTE = loadstring or function(c) return pcall(function() return loadstring(c) end) end
-local _DECRYPTED_CORE = _ANAS_STORAGE[1](_ANAS_STORAGE[2])
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "AnasHubPremium"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = game.CoreGui
 
--- ====== 🏢 SERVER-SIDE RUNNER ====== --
-pcall(function()
-    local g = game:GetService("CoreGui")
-    local scr = Instance.new("ScreenGui", g)
-    scr.Name = "AnasHubPremium"
-    scr.ResetOnSpawn = false
-    
-    local f1 = Instance.new("Frame", scr)
-    f1.Size = UDim2.new(0, 320, 0, 180)
-    f1.Position = UDim2.new(0.35, 0, 0.35, 0)
-    f1.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
-    f1.Active = true f1.Draggable = true
-    Instance.new("UICorner", f1).CornerRadius = UDim.new(0, 12)
-    
-    local t1 = Instance.new("TextLabel", f1)
-    t1.Size = UDim2.new(1, 0, 0, 40)
-    t1.Text = "🔑 ANAS HUB V20 - ENTER KEY"
-    t1.TextColor3 = Color3.fromRGB(0, 255, 255)
-    t1.BackgroundColor3 = Color3.fromRGB(25, 25, 40)
-    t1.Font = Enum.Font.GothamBold
-    t1.TextSize = 14
-    
-    local box = Instance.new("TextBox", f1)
-    box.Size = UDim2.new(0, 260, 0, 40)
-    box.Position = UDim2.new(0, 30, 0, 60)
-    box.PlaceholderText = "کلیلێ ل ڤێرە بنووسە..."
-    box.Text = ""
-    box.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
-    box.TextColor3 = Color3.fromRGB(255, 255, 255)
-    box.Font = Enum.Font.Gotham
-    box.TextSize = 14
-    
-    local sub = Instance.new("TextButton", f1)
-    sub.Size = UDim2.new(0, 140, 0, 35)
-    sub.Position = UDim2.new(0, 90, 0, 120)
-    sub.Text = "🔒 Check Key"
-    sub.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-    sub.TextColor3 = Color3.fromRGB(255, 255, 255)
-    sub.Font = Enum.Font.GothamBold
-    sub.TextSize = 14
-    
-    local f2 = Instance.new("Frame", scr)
-    f2.Size = UDim2.new(0, 400, 0, 250)
-    f2.Position = UDim2.new(0.3, 0, 0.3, 0)
-    f2.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
-    f2.Visible = false f2.Active = true f2.Draggable = true
-    Instance.new("UICorner", f2).CornerRadius = UDim.new(0, 12)
-    
-    local t2 = Instance.new("TextLabel", f2)
-    t2.Size = UDim2.new(1, 0, 0, 45)
-    t2.Text = "✨🔮 ANAS HUB V20 - KEYBOARD ESCAPE 🔮✨"
-    t2.BackgroundColor3 = Color3.fromRGB(20, 20, 35)
-    t2.TextColor3 = Color3.fromRGB(0, 255, 150)
-    t2.Font = Enum.Font.GothamBold
+-- ====== 🏢 ١. پەنجەرەیا کلیلێ (Key Verification Frame) ====== --
+local KeyFrame = Instance.new("Frame")
+KeyFrame.Size = UDim2.new(0, 320, 0, 180)
+KeyFrame.Position = UDim2.new(0.35, 0, 0.35, 0)
+KeyFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+KeyFrame.Active = true
+KeyFrame.Draggable = true
+KeyFrame.Parent = ScreenGui
+
+local KeyCorner = Instance.new("UICorner")
+KeyCorner.CornerRadius = UDim.new(0, 12)
+KeyCorner.Parent = KeyFrame
+
+local KeyTitle = Instance.new("TextLabel")
+KeyTitle.Size = UDim2.new(1, 0, 0, 40)
+KeyTitle.Text = "🔑 ANAS HUB V21 - ENTER KEY"
+KeyTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
+KeyTitle.BackgroundColor3 = Color3.fromRGB(25, 25, 40)
+KeyTitle.Font = Enum.Font.GothamBold
+KeyTitle.TextSize = 14
+KeyTitle.Parent = KeyFrame
+
+local TextBox = Instance.new("TextBox")
+TextBox.Size = UDim2.new(0, 260, 0, 40)
+TextBox.Position = UDim2.new(0, 30, 0, 60)
+TextBox.PlaceholderText = "کلیلێ ل ڤێرە بنووسە..."
+TextBox.Text = ""
+TextBox.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.Font = Enum.Font.Gotham
+TextBox.TextSize = 14
+TextBox.Parent = KeyFrame
+
+local SubmitBtn = Instance.new("TextButton")
+SubmitBtn.Size = UDim2.new(0, 140, 0, 35)
+SubmitBtn.Position = UDim2.new(0, 90, 0, 120)
+SubmitBtn.Text = "🔒 Check Key"
+SubmitBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SubmitBtn.Font = Enum.Font.GothamBold
+SubmitBtn.TextSize = 14
+SubmitBtn.Parent = KeyFrame
+
+-- ====== 👑 ٢. مینیۆیا سەرەکى (Main Features Frame) ====== --
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 400, 0, 250)
+MainFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
+MainFrame.Visible = false -- ل دەستپێکێ بەرزەیە هەتا کلیل ڕاست دەرکەبیت
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = ScreenGui
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 12)
+MainCorner.Parent = MainFrame
+
+local MainTitle = Instance.new("TextLabel")
+MainTitle.Size = UDim2.new(1, 0, 0, 45)
+MainTitle.Text = "✨🔮 ANAS HUB V21 - MAIN MENU 🔮✨"
+MainTitle.BackgroundColor3 = Color3.fromRGB(20, 20, 35)
+MainTitle.TextColor3 = Color3.fromRGB(0, 255, 150)
+MainTitle.Font = Enum.Font.GothamBold
+MainTitle.TextSize = 15
+MainTitle.Parent = MainFrame
+
+-- دوگمەیا Auto Win Stage 12
+local AutoWinBtn = Instance.new("TextButton")
+AutoWinBtn.Size = UDim2.new(0, 340, 0, 45)
+AutoWinBtn.Position = UDim2.new(0, 30, 0, 70)
+AutoWinBtn.Text = "🏆 ACTIVATE AUTO WIN (STAGE 1-12)"
+AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+AutoWinBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+AutoWinBtn.Font = Enum.Font.GothamBold
+AutoWinBtn.TextSize = 14
+AutoWinBtn.Parent = MainFrame
+
+-- دوگمەیا WalkSpeed 60
+local SpeedBtn = Instance.new("TextButton")
+SpeedBtn.Size = UDim2.new(0, 160, 0, 45)
+SpeedBtn.Position = UDim2.new(0, 30, 0, 135)
+SpeedBtn.Text = "⚡ WalkSpeed (60)"
+SpeedBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+SpeedBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedBtn.Font = Enum.Font.GothamBold
+SpeedBtn.TextSize = 13
+SpeedBtn.Parent = MainFrame
+
+-- دوگمەیا JumpPower 120
+local JumpBtn = Instance.new("TextButton")
+JumpBtn.Size = UDim2.new(0, 160, 0, 45)
+JumpBtn.Position = UDim2.new(0, 210, 0, 135)
+JumpBtn.Text = "🚀 JumpPower (120)"
+JumpBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+JumpBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+JumpBtn.Font = Enum.Font.GothamBold
+JumpBtn.TextSize = 13
+JumpBtn.Parent = MainFrame
+
+-- دوگمەیا داخستنێ
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 100, 0, 30)
+CloseBtn.Position = UDim2.new(0, 150, 0, 200)
+CloseBtn.Text = "❌ Close"
+CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.Font = Enum.Font.Gotham
+CloseBtn.TextSize = 12
+CloseBtn.Parent = MainFrame
+
+-- ====== ⚙️ ٣. لۆجیک و فرمانێن کایێ (Functions) ====== --
+SubmitBtn.MouseButton1Click:Connect(function()
+    local input = TextBox.Text
+    if AllowedKeys[input] then
+        KeyFrame:Destroy() -- لادانا پەنجەرەیا کلیلێ
+        MainFrame.Visible = true -- ڤەکرنا مینیۆیا سەرەکی
+    else
+        TextBox.Text = ""
+        TextBox.PlaceholderText = "کلیل خەلەتە! (Wrong Key)"
+    end
+end)
+
+SpeedBtn.MouseButton1Click:Connect(function()
+    local p = game.Players.LocalPlayer
+    if p.Character and p.Character:FindFirstChild("Humanoid") then
+        p.Character.Humanoid.WalkSpeed = 60
+    end
+end)
+
+JumpBtn.MouseButton1Click:Connect(function()
+    local p = game.Players.LocalPlayer
+    if p.Character and p.Character:FindFirstChild("Humanoid") then
+        p.Character.Humanoid.JumpPower = 120
+        p.Character.Humanoid.UseJumpPower = true
+    end
+end)
+
+AutoWinBtn.MouseButton1Click:Connect(function()
+    local player = game.Players.LocalPlayer
+    task.spawn(function()
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            for i = 1, 12 do
+                for _, v in pairs(workspace:GetDescendants()) do
+                    if v.Name == tostring(i) and v:IsA("BasePart") then
+                        player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
+                        task.wait(0.5)
+                        break
+                    end
+                end
+            end
+        end
+    end)
+end)
+
+CloseBtn.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
     t2.TextSize = 15
     
     local b_win = Instance.new("TextButton", f2)
