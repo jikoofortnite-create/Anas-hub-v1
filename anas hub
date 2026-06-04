@@ -1,5 +1,5 @@
--- [[ ANAS HUB V26.1 - IMAGE FIXED EDITION ]] --
--- [[ 100% WORKING FOR MOBILE EXECUTORS ]] --
+-- [[ ANAS HUB V26.2 - ULTIMATE AUTO WIN FIX ]] --
+-- [[ 100% FIXED FOR STAGE ESCAPE GAMES ]] --
 
 if game:GetService("CoreGui"):FindFirstChild("AnasHubPremium") then
     game:GetService("CoreGui").AnasHubPremium:Destroy()
@@ -18,7 +18,7 @@ ScreenGui.Parent = game:GetService("CoreGui")
 
 -- ====== 🔒 1. KEY SYSTEM (FIXED BACKGROUND) ====== --
 local KeyFrame = Instance.new("Frame")
-KeyFrame.Size = UDim2.new(0, 420, 0, 280) -- گونجاندن دگەل شاشا مۆبایلێ وەک وێنەی
+KeyFrame.Size = UDim2.new(0, 420, 0, 280)
 KeyFrame.Position = UDim2.new(0.3, 0, 0.25, 0)
 KeyFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 KeyFrame.Active = true
@@ -26,18 +26,15 @@ KeyFrame.Parent = ScreenGui
 
 Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0, 14)
 
--- لۆدکرنا وێنێ 1116.jpg ب ئایدییا فەرمی یا باکگراوندی
 local BackgroundImage = Instance.new("ImageLabel")
 BackgroundImage.Name = "KeyBackgroundImg"
 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
-BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
-BackgroundImage.Image = "rbxassetid://132742918428272" -- ئایدییا فەرمی یا هاتیە ڕاستکرن بۆ مۆبایلێ
+BackgroundImage.Image = "rbxassetid://132742918428272"
 BackgroundImage.ScaleType = Enum.ScaleType.Stretch
 BackgroundImage.BackgroundTransparency = 1
 BackgroundImage.Parent = KeyFrame
 Instance.new("UICorner", BackgroundImage).CornerRadius = UDim.new(0, 14)
 
--- ناونیشانێ ل سەر شاشێ
 local KeyTitle = Instance.new("TextLabel", KeyFrame)
 KeyTitle.Size = UDim2.new(1, 0, 0, 35)
 KeyTitle.Position = UDim2.new(0, 0, 0, 12)
@@ -48,10 +45,9 @@ KeyTitle.Font = Enum.Font.GothamBold
 KeyTitle.TextSize = 15
 KeyTitle.ZIndex = 3
 
--- جهێ نووسینا کلیلێ (TextBox)
 local TextBox = Instance.new("TextBox", KeyFrame)
 TextBox.Size = UDim2.new(0, 160, 0, 35)
-TextBox.Position = UDim2.new(0, 130, 0, 125) -- جهێ ناوەڕاست بۆ کلیلێ
+TextBox.Position = UDim2.new(0, 130, 0, 125)
 TextBox.PlaceholderText = "Key..."
 TextBox.Text = ""
 TextBox.BackgroundColor3 = Color3.fromRGB(12, 22, 40)
@@ -62,7 +58,6 @@ TextBox.TextSize = 13
 TextBox.ZIndex = 3
 Instance.new("UICorner", TextBox).CornerRadius = UDim.new(0, 8)
 
--- دوگمەیا ACCESS (مەکسی ڕێک وەک شاشا تە)
 local SubmitBtn = Instance.new("TextButton", KeyFrame)
 SubmitBtn.Size = UDim2.new(0, 180, 0, 42)
 SubmitBtn.Position = UDim2.new(0, 120, 0, 200)
@@ -96,7 +91,7 @@ MainTitle.TextSize = 15
 local AutoWinBtn = Instance.new("TextButton", MainFrame)
 AutoWinBtn.Size = UDim2.new(0, 340, 0, 40)
 AutoWinBtn.Position = UDim2.new(0, 30, 0, 60)
-AutoWinBtn.Text = "🏆 ACTIVATE AUTO WIN (STAGE 1-12)"
+AutoWinBtn.Text = "🏆 ACTIVATE AUTO WIN (GOD MODE)"
 AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
 AutoWinBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
 AutoWinBtn.Font = Enum.Font.GothamBold
@@ -138,7 +133,7 @@ CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 CloseBtn.Font = Enum.Font.Gotham
 CloseBtn.TextSize = 12
 
--- ====== 📱 3. TOGGLE BUTTON BUTTON ====== --
+-- ====== 📱 3. TOGGLE BUTTON ====== --
 local ToggleBtn = Instance.new("TextButton")
 ToggleBtn.Size = UDim2.new(0, 60, 0, 60)
 ToggleBtn.Position = UDim2.new(0.02, 0, 0.4, 0)
@@ -219,19 +214,38 @@ InfJumpBtn.MouseButton1Click:Connect(function()
     end
 end)
 
+-- [[ 🏆 ADVANCED AUTO WIN LOGIC ENGINE ]] --
 AutoWinBtn.MouseButton1Click:Connect(function()
+    AutoWinBtn.Text = "⚡ TELEPORTING..."
+    AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
+    
     task.spawn(function()
         pcall(function()
-            local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
-            for i = 1, 12 do
-                for _, v in pairs(workspace:GetDescendants()) do
-                    if v.Name == tostring(i) and v:IsA("BasePart") then
-                        hrp.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                        task.wait(0.4)
+            local player = game.Players.LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local hrp = character:WaitForChild("HumanoidRootPart")
+            
+            -- پشکنینا گشتی بۆ دۆزینەوەیا پارتێن یاریێ
+            for stageNumber = 1, 100 do -- بازنەیا گەڕیانێ مەزنتر لێهات هەتا قۆناغێن بلند
+                local targetPart = nil
+                
+                -- ڕێگایێ ئێکێ: گەڕیان ب دویڤ ژمارا ستەیجی
+                for _, object in pairs(workspace:GetDescendants()) do
+                    if (object.Name == tostring(stageNumber) or object.Name == "Stage" .. stageNumber or object.Name == "Checkpoint" .. stageNumber) and object:IsA("BasePart") then
+                        targetPart = object
                         break
                     end
                 end
+                
+                -- ئەگەر پارت هاتە دۆزینەوە، تیلیپۆرت بکە ب شێوازەکێ پارێزراو
+                if targetPart then
+                    hrp.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
+                    task.wait(0.6) -- کاتەکێ گونجاو دا سیستەمێ یاریێ تە بلۆک نەکەت
+                end
             end
+            
+            AutoWinBtn.Text = "🏆 AUTO WIN ACTIVATED"
+            AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
         end)
     end)
 end)
