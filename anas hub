@@ -1,74 +1,126 @@
--- [[ ANAS HUB V5 - THE ULTIMATE ALL-IN-ONE HYBRID SYSTEM ]] --
--- زمانێ ئێکێ (Lua): ئەڤە بناغێ سەرەکی یێ ڕۆبلۆکسێ یە بۆ کۆنترۆڵکرنا یاریێ
-if game.CoreGui:FindFirstChild("AnasHubHybrid") then
-    game.CoreGui.AnasHubHybrid:Destroy()
-end
+-- [[ ANAS HUB V8 - GALAXY SPACE BACKGROUND UPDATE ]] --
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "AnasHubHybrid"
-ScreenGui.ResetOnSpawn = false
-ScreenGui.Parent = game.CoreGui
+-- دروستکرنا پەنجەرەیا سەرەکی
+local Window = OrionLib:MakeWindow({
+    Name = "👑 ANAS HUB V8 - GALAXY EDITION 👑", 
+    HidePremium = false, 
+    SaveConfig = true, 
+    ConfigFolder = "AnasHubConfig",
+    IntroText = "Loading Galaxy Design..."
+})
 
--- دروستکرنا کادرا مینیۆیێ د Lua دا
-local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 500, 0, 350)
-MainFrame.Position = UDim2.new(0.3, 0, 0.25, 0)
-MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
-MainFrame.Active = true
-MainFrame.Draggable = true
-MainFrame.Parent = ScreenGui
+-- [[ جێبەجێکرنا وێنێ تە یێ ستێران ل سەر بەکگراوندێ مینیۆیێ ]] --
+pcall(function()
+    local coreGui = game:GetService("CoreGui")
+    local orionGui = coreGui:FindFirstChild("Orion")
+    if orionGui then
+        local main = orionGui:FindFirstChild("Main")
+        if main and main:IsA("Frame") then
+            -- ل ڤێرە وێنێ ئەسمان و ستێران (هاوشێوەی وێنێ تە 1088.jpg) جێبەجێ دبیت
+            main.BackgroundTransparency = 0.1
+            
+            local bgImage = Instance.new("ImageLabel")
+            bgImage.Name = "AnasGalaxyBG"
+            bgImage.Size = UDim2.new(1, 0, 1, 0)
+            bgImage.Position = UDim2.new(0, 0, 0, 0)
+            bgImage.Image = "rbxassetid://6073740243" -- ناسنامەیا وێنێ ستێران و گەردوونێ ڕەش و شین
+            bgImage.ImageColor3 = Color3.fromRGB(150, 150, 200) -- ڕێکخستنا ڕەنگی دا گەلەک گەش نەبیت
+            bgImage.ScaleType = Enum.ScaleType.Crop
+            bgImage.ZIndex = 0
+            bgImage.Parent = main
+            
+            local bgCorner = Instance.new("UICorner")
+            bgCorner.CornerRadius = UDim.new(0, 12)
+            bgCorner.Parent = bgImage
+        end
+    end
+end)
 
-local UICorner = Instance.new("UICorner")
-UICorner.CornerRadius = UDim.new(0, 16)
-UICorner.Parent = MainFrame
+-----------------------------------------------------------
+-- [ ١. بەشێ یاریزانی - PLAYER TAB ] --
+-----------------------------------------------------------
+local PlayerTab = Window:MakeTab({
+    Name = "👤 Player",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
 
----------------------------------------------------------------------
--- ل ڤێرە ئەم دێ زمانێن (HTML / CSS / JavaScript) کەنە د ناڤ دەقەکێ String دا
--- Lua دێ ڤی دەقی وەک سایتەکێ ناڤخۆیی ڕەندەر کەت!
----------------------------------------------------------------------
-local HybridWebContent = [[
-<!DOCTYPE html>
-<html>
-<head>
-    <!-- زمانێ دویێ (CSS): بۆ دیزاینەکێ ئێجگار مۆدێرن، گۆڵد و سایبەرپانک د ناڤ مینیۆیێ دا -->
-    <style>
-        body {
-            background: linear-gradient(135deg, #121216 0%, #1a1a24 100%);
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-            border-radius: 16px;
-        }
-        h1 {
-            color: #ffd700; /* ڕەنگێ زێڕینی شاهانە */
-            font-size: 22px;
-            text-shadow: 0px 0px 10px rgba(255, 215, 0, 0.5);
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #ffd700; }
-            to { text-shadow: 0 0 20px #00ff7f; }
-        }
-        .btn-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 25px;
-        }
-        .modern-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid #00ff7f;
-            color: #00ff7f;
-            padding: 12px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .modern-btn:hover {
+PlayerTab:AddButton({
+    Name = "⚡ Set WalkSpeed (60)",
+    Callback = function()
+        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60
+        end
+    end    
+})
+
+PlayerTab:AddButton({
+    Name = "🚀 Set JumpPower (120)",
+    Callback = function()
+        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+            game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120
+            game.Players.LocalPlayer.Character.Humanoid.UseJumpPower = true
+        end
+    end    
+})
+
+local noclip = false
+PlayerTab:AddToggle({
+    Name = "👻 Toggle Noclip (Wall Hack)",
+    Default = false,
+    Callback = function(Value)
+        noclip = Value
+        game:GetService("RunService").Stepped:Connect(function()
+            if noclip and game.Players.LocalPlayer.Character then
+                for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then v.CanCollide = false end
+                end
+            end
+        end)
+    end
+})
+
+-----------------------------------------------------------
+-- [ ٢. بەشێ تێلەپۆرتێ - TELEPORT TAB ] --
+-----------------------------------------------------------
+local TeleportTab = Window:MakeTab({
+    Name = "📍 Teleports",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+TeleportTab:AddButton({
+    Name = "🏠 Teleport to Lobby",
+    Callback = function()
+        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 0) 
+        end
+    end    
+})
+
+-----------------------------------------------------------
+-- [ ٣. بەشێ خۆکار - AUTOMATION ] --
+-----------------------------------------------------------
+local AutoTab = Window:MakeTab({
+    Name = "🤖 Automation",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+AutoTab:AddButton({
+    Name = "🛡️ Activate Anti-AFK (Anti-Kick)",
+    Callback = function()
+        local vu = game:GetService("VirtualUser")
+        game.Players.LocalPlayer.Idled:Connect(function()
+            vu:Button2Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+            task.wait(1)
+            vu:Button2Up(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+        end)
+    end    
+})
+
+OrionLib:Init()
             background: #00ff7f;
             color: #121216;
             box-shadow: 0px 0px 15px #00ff7f;
