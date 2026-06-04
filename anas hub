@@ -1,110 +1,174 @@
--- [[ ANAS HUB V16 - COMMERCIAL STABILIZED KEY SYSTEM ]] --
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+-- [[ ANAS HUB V17 - 100% MOBILE COMPATIBLE & NO LAG ]] --
+if game.CoreGui:FindFirstChild("AnasHubPremium") then
+    game.CoreGui.AnasHubPremium:Destroy()
+end
 
-local Window = Rayfield:CreateWindow({
-   Name = "✨🔮 ANAS HUB V16 - KEYBOARD ESCAPE 🔮✨",
-   LoadingTitle = "🔒 COMMERCIAL PREMIUM EDITION 🔒",
-   LoadingSubtitle = "👑 Created by Anas 👑",
-   Theme = "Ocean",
-   DisableRayfieldPrompts = false,
-   DisableBuildWarnings = false,
-   
-   -- [[ 🔑 سیستەمێ کلیلێ یێ فەرمی و جێگیر یێ لایبرەریێ 🔑 ]] --
-   KeySystem = true,
-   KeySettings = {
-      Title = "🔑 Anas Hub v16 - Verification",
-      Subtitle = "سکرێپت یا پاراستییە! کلیلێ ژ ئەنەسی وەربگرە",
-      Note = "🔑 کلیل تەنێ بۆ ئەو کەسایە یێن کو سکرێپت کڕینە ب 5$",
-      FileName = "AnasHubKeyV16", 
-      SaveKey = true, -- کلیل د مۆبایلا کڕیاری دا پاشکەفت دبیت دا هەر جار نەنووسیتەوە
-      GrabKeyFromUrl = false,
-      
-      -- 📊 ل ڤێرە تو دشێی کلیلان بۆ کڕیارێن خۆ دیار بکەی:
-      -- بۆ نموونە تو دشێی ناڤێ کڕیاری بکەی کلیل وەک: ANAS_ANWAR12
-      Key = {
-         "ANAS_VIP_999", 
-         "ANAS_PREMIUM_5USD", 
-         "KEY_BUYER_03",
-         "ANAS_KEY_XYZ"
-      }
-   }
-})
+-- [[ 🔑 سیستەمێ کلیلێ یێ ناڤخۆیی ]] --
+local AllowedKeys = {
+    ["ANAS_VIP_999"] = true,
+    ["ANAS_PREMIUM_5USD"] = true,
+    ["KEY_2026_ANAS"] = true
+}
 
------------------------------------------------------------
--- [ 🏆 NITRO AUTO WIN ] --
------------------------------------------------------------
-local AutoWinTab = Window:CreateTab("🏆 NITRO AUTO WIN", 4483345998)
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "AnasHubPremium"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = game.CoreGui
 
-AutoWinTab:CreateButton({
-   Name = "✨ Teleport to Stage 12",
-   Callback = function()
-        local player = game.Players.LocalPlayer
+-- ====== 🏢 ١. پەنجەرەیا کلیلێ (Key System Window) ====== --
+local KeyFrame = Instance.new("Frame")
+KeyFrame.Size = UDim2.new(0, 320, 0, 180)
+KeyFrame.Position = UDim2.new(0.35, 0, 0.35, 0)
+KeyFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+KeyFrame.Active = true
+KeyFrame.Draggable = true
+KeyFrame.Parent = ScreenGui
+
+local KeyCorner = Instance.new("UICorner")
+KeyCorner.CornerRadius = UDim.new(0, 12)
+KeyCorner.Parent = KeyFrame
+
+local KeyTitle = Instance.new("TextLabel")
+KeyTitle.Size = UDim2.new(1, 0, 0, 40)
+KeyTitle.Text = "🔑 ANAS HUB V17 - ENTER KEY"
+KeyTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
+KeyTitle.BackgroundColor3 = Color3.fromRGB(25, 25, 40)
+KeyTitle.Font = Enum.Font.GothamBold
+KeyTitle.TextSize = 14
+KeyTitle.Parent = KeyFrame
+
+local TextBox = Instance.new("TextBox")
+TextBox.Size = UDim2.new(0, 260, 0, 40)
+TextBox.Position = UDim2.new(0, 30, 0, 60)
+TextBox.PlaceholderText = "کلیلێ ل ڤێرە بنووسە..."
+TextBox.Text = ""
+TextBox.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.Font = Enum.Font.Gotham
+TextBox.TextSize = 14
+TextBox.Parent = KeyFrame
+
+local SubmitBtn = Instance.new("TextButton")
+SubmitBtn.Size = UDim2.new(0, 140, 0, 35)
+SubmitBtn.Position = UDim2.new(0, 90, 0, 120)
+SubmitBtn.Text = "🔒 Check Key"
+SubmitBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SubmitBtn.Font = Enum.Font.GothamBold
+SubmitBtn.TextSize = 14
+SubmitBtn.Parent = KeyFrame
+
+-- ====== 👑 ٢. مینیۆیا سەرەکى (Main Menu Window) ====== --
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 400, 0, 250)
+MainFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
+MainFrame.Visible = false -- بەرزەیە هەتا کلیل ڕاست دەرکەبیت
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = ScreenGui
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 12)
+MainCorner.Parent = MainFrame
+
+local MainTitle = Instance.new("TextLabel")
+MainTitle.Size = UDim2.new(1, 0, 0, 45)
+MainTitle.Text = "✨🔮 ANAS HUB V17 - KEYBOARD ESCAPE 🔮✨"
+MainTitle.BackgroundColor3 = Color3.fromRGB(20, 20, 35)
+MainTitle.TextColor3 = Color3.fromRGB(0, 255, 150)
+MainTitle.Font = Enum.Font.GothamBold
+MainTitle.TextSize = 15
+MainTitle.Parent = MainFrame
+
+-- دوگمەیا Auto Win Stage 12
+local AutoWinBtn = Instance.new("TextButton")
+AutoWinBtn.Size = UDim2.new(0, 340, 0, 45)
+AutoWinBtn.Position = UDim2.new(0, 30, 0, 70)
+AutoWinBtn.Text = "🏆 ACTIVATE AUTO WIN (STAGE 1-12)"
+AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+AutoWinBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+AutoWinBtn.Font = Enum.Font.GothamBold
+AutoWinBtn.TextSize = 14
+AutoWinBtn.Parent = MainFrame
+
+-- دوگمەیا WalkSpeed 60
+local SpeedBtn = Instance.new("TextButton")
+SpeedBtn.Size = UDim2.new(0, 160, 0, 45)
+SpeedBtn.Position = UDim2.new(0, 30, 0, 135)
+SpeedBtn.Text = "⚡ WalkSpeed (60)"
+SpeedBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+SpeedBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedBtn.Font = Enum.Font.GothamBold
+SpeedBtn.TextSize = 13
+SpeedBtn.Parent = MainFrame
+
+-- دوگمەیا JumpPower 120
+local JumpBtn = Instance.new("TextButton")
+JumpBtn.Size = UDim2.new(0, 160, 0, 45)
+JumpBtn.Position = UDim2.new(0, 210, 0, 135)
+JumpBtn.Text = "🚀 JumpPower (120)"
+JumpBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+JumpBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+JumpBtn.Font = Enum.Font.GothamBold
+JumpBtn.TextSize = 13
+JumpBtn.Parent = MainFrame
+
+-- دوگمەیا داخستنێ
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 100, 0, 30)
+CloseBtn.Position = UDim2.new(0, 150, 0, 200)
+CloseBtn.Text = "❌ Close"
+CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.Font = Enum.Font.Gotham
+CloseBtn.TextSize = 12
+CloseBtn.Parent = MainFrame
+
+-- ====== ⚙️ ٣. لۆجیک و فرمانێن کایێ (Functions) ====== --
+SubmitBtn.MouseButton1Click:Connect(function()
+    local input = TextBox.Text
+    if AllowedKeys[input] then
+        KeyFrame:Destroy() -- لادانا پەنجەرەیا کلیلێ
+        MainFrame.Visible = true -- ڤەکرنا مینیۆیا سەرەکی
+    else
+        TextBox.Text = ""
+        TextBox.PlaceholderText = "کلیل خەلەتە! (Wrong Key)"
+    end
+end)
+
+SpeedBtn.MouseButton1Click:Connect(function()
+    local p = game.Players.LocalPlayer
+    if p.Character and p.Character:FindFirstChild("Humanoid") then
+        p.Character.Humanoid.WalkSpeed = 60
+    end
+end)
+
+JumpBtn.MouseButton1Click:Connect(function()
+    local p = game.Players.LocalPlayer
+    if p.Character and p.Character:FindFirstChild("Humanoid") then
+        p.Character.Humanoid.JumpPower = 120
+        p.Character.Humanoid.UseJumpPower = true
+    end
+end)
+
+AutoWinBtn.MouseButton1Click:Connect(function()
+    local player = game.Players.LocalPlayer
+    task.spawn(function()
         if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            local found = false
-            for _, v in pairs(workspace:GetDescendants()) do
-                if (v.Name == "12" or v.Name == "Stage12" or v.Name == "Stage 12") and v:IsA("BasePart") then
-                    player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                    found = true
-                    break
-                end
-            end
-            if found then
-                Rayfield:Notify({Title = "ANAS HUB", Content = "Warped to Stage 12! 👑", Duration = 3})
-            else
-                Rayfield:Notify({Title = "ANAS HUB", Content = "Stage 12 not found! Move closer.", Duration = 3})
-            end
-        end
-   end,
-})
-
-local autowinning = false
-AutoWinTab:CreateToggle({
-   Name = "🔥 Auto Win Loop (Stages 1 to 12)",
-   CurrentValue = false,
-   Flag = "AutoWinHwidFlag",
-   Callback = function(Value)
-        autowinning = Value
-        task.spawn(function()
-            while autowinning do
-                local player = game.Players.LocalPlayer
-                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    for i = 1, 12 do
-                        if not autowinning then break end
-                        for _, v in pairs(workspace:GetDescendants()) do
-                            if v.Name == tostring(i) and v:IsA("BasePart") then
-                                player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                                task.wait(0.4)
-                                break
-                            end
-                        end
+            for i = 1, 12 do
+                for _, v in pairs(workspace:GetDescendants()) do
+                    if v.Name == tostring(i) and v:IsA("BasePart") then
+                        player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
+                        task.wait(0.5)
+                        break
                     end
                 end
-                task.wait(1)
             end
-        end)
-   end,
-})
-
------------------------------------------------------------
--- [ 🚀 SPEED & POWER ] --
------------------------------------------------------------
-local PlayerTab = Window:CreateTab("🚀 SPEED & POWER", 4483345998)
-
-PlayerTab:CreateButton({
-   Name = "⚡ Set WalkSpeed (60)",
-   Callback = function()
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60
         end
-   end,
-})
+    end)
+end)
 
-PlayerTab:CreateButton({
-   Name = "🚀 Set JumpPower (120)",
-   Callback = function()
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-            game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120
-            game.Players.LocalPlayer.Character.Humanoid.UseJumpPower = true
-        end
-   end,
-})
+CloseBtn.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
