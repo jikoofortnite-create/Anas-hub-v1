@@ -1,5 +1,5 @@
--- [[ ANAS HUB V27.2 - SMART VIOLENCE DISTRICT UPDATE ]] --
--- [[ TEAM GREEN / KNIFE RED ESP + LEGIT AUTO-WALK KILL AURA ]] --
+-- [[ ANAS HUB V27.3 - ULTIMATE MULTI-GAME & ESP EDITION ]] --
+-- [[ SUPPORTED: KEYBOARD ESCAPE | BROOKHAVEN | VIOLENCE DISTRICT ]] --
 
 if game:GetService("CoreGui"):FindFirstChild("AnasHubPremium") then
     game:GetService("CoreGui").AnasHubPremium:Destroy()
@@ -23,7 +23,6 @@ KeyFrame.Position = UDim2.new(0.3, 0, 0.25, 0)
 KeyFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 KeyFrame.Active = true
 KeyFrame.Parent = ScreenGui
-
 Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0, 14)
 
 local TextBox = Instance.new("TextBox", KeyFrame)
@@ -60,7 +59,7 @@ Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 14)
 
 local MainTitle = Instance.new("TextLabel", MainFrame)
 MainTitle.Size = UDim2.new(1, 0, 0, 45)
-MainTitle.Text = "✨🔱 ANAS HUB V27.2 - SMART EDITION 🔱✨"
+MainTitle.Text = "✨🔱 ANAS HUB V27.3 - ULTIMATE MENU 🔱✨"
 MainTitle.BackgroundColor3 = Color3.fromRGB(18, 18, 26)
 MainTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
 MainTitle.Font = Enum.Font.GothamBold
@@ -109,9 +108,6 @@ local Tab2 = CreateTab("🏡 Brookhaven", 55)
 local Tab3 = CreateTab("💥 Violence D.", 100)
 local Tab4 = CreateTab("⚡ Player", 145)
 
-Tabs["⌨️ Keyboard"].Frame.Visible = true
-Tabs["⌨️ Keyboard"].Btn.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
-
 -- ====== ⌨️ TAB 1: KEYBOARD ESCAPE ====== --
 local KeyboardBtn = Instance.new("TextButton", Tab1)
 KeyboardBtn.Size = UDim2.new(1, -20, 0, 45)
@@ -134,24 +130,31 @@ Instance.new("UICorner", RobBankBtn).CornerRadius = UDim.new(0, 8)
 
 -- ====== 💥 TAB 3: VIOLENCE DISTRICT ====== --
 local KillAuraBtn = Instance.new("TextButton", Tab3)
-KillAuraBtn.Size = UDim2.new(1, -20, 0, 42)
-KillAuraBtn.Position = UDim2.new(0, 10, 0, 20)
-KillAuraBtn.Text = "⚔️ LEGIT AUTO-WALK KILL (NEED KNIFE)"
+KillAuraBtn.Size = UDim2.new(1, -20, 0, 40)
+KillAuraBtn.Position = UDim2.new(0, 10, 0, 10)
+KillAuraBtn.Text = "⚔️ LEGIT AUTO-WALK KILL"
 KillAuraBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
-KillAuraBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 KillAuraBtn.Font = Enum.Font.GothamBold
 KillAuraBtn.TextSize = 11
 Instance.new("UICorner", KillAuraBtn).CornerRadius = UDim.new(0, 8)
 
 local EspBtn = Instance.new("TextButton", Tab3)
-EspBtn.Size = UDim2.new(1, -20, 0, 42)
-EspBtn.Position = UDim2.new(0, 10, 0, 75)
+EspBtn.Size = UDim2.new(1, -20, 0, 40)
+EspBtn.Position = UDim2.new(0, 10, 0, 60)
 EspBtn.Text = "👁️ SMART ESP (GREEN/RED KNIFE)"
 EspBtn.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
-EspBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 EspBtn.Font = Enum.Font.GothamBold
-EspBtn.TextSize = 12
+EspBtn.TextSize = 11
 Instance.new("UICorner", EspBtn).CornerRadius = UDim.new(0, 8)
+
+local ServerJoinBtn = Instance.new("TextButton", Tab3)
+ServerJoinBtn.Size = UDim2.new(1, -20, 0, 40)
+ServerJoinBtn.Position = UDim2.new(0, 10, 0, 110)
+ServerJoinBtn.Text = "🌍 JOIN NEAR-START SERVER (1m)"
+ServerJoinBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
+ServerJoinBtn.Font = Enum.Font.GothamBold
+ServerJoinBtn.TextSize = 11
+Instance.new("UICorner", ServerJoinBtn).CornerRadius = UDim.new(0, 8)
 
 -- ====== ⚡ TAB 4: PLAYER MODS ====== --
 local SpeedBtn = Instance.new("TextButton", Tab4)
@@ -159,222 +162,73 @@ SpeedBtn.Size = UDim2.new(0, 140, 0, 40)
 SpeedBtn.Position = UDim2.new(0, 10, 0, 20)
 SpeedBtn.Text = "⚡ WalkSpeed (60)"
 SpeedBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
-SpeedBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedBtn.Font = Enum.Font.GothamBold
 SpeedBtn.TextSize = 12
 Instance.new("UICorner", SpeedBtn).CornerRadius = UDim.new(0, 6)
 
-local JumpBtn = Instance.new("TextButton", Tab4)
-JumpBtn.Size = UDim2.new(0, 140, 0, 40)
-JumpBtn.Position = UDim2.new(0, 160, 0, 20)
-JumpBtn.Text = "🚀 JumpPower (120)"
-JumpBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
-JumpBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-JumpBtn.Font = Enum.Font.GothamBold
-JumpBtn.TextSize = 12
-Instance.new("UICorner", JumpBtn).CornerRadius = UDim.new(0, 6)
-
--- ====== 📱 3. TOGGLE BUTTON ====== --
+-- ====== 📱 TOGGLE ====== --
 local ToggleBtn = Instance.new("TextButton")
 ToggleBtn.Size = UDim2.new(0, 60, 0, 60)
 ToggleBtn.Position = UDim2.new(0.02, 0, 0.4, 0)
 ToggleBtn.Text = "ANAS"
 ToggleBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
-ToggleBtn.TextColor3 = Color3.fromRGB(0, 255, 255)
-ToggleBtn.Font = Enum.Font.GothamBold
-ToggleBtn.TextSize = 12
 ToggleBtn.Visible = false
 ToggleBtn.Parent = ScreenGui
 Instance.new("UICorner", ToggleBtn).CornerRadius = UDim.new(0, 30)
 
--- ====== ⚙️ 4. LOGIC ENGINE SYSTEMS ====== --
-local function MakeDraggable(frame)
-    local UserInputService = game:GetService("UserInputService")
-    local dragging, dragInput, dragStart, startPos
-    frame.InputBegan:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true dragStart = input.Position startPos = frame.Position
-            input.Changed:Connect(function() if input.UserInputState == Enum.UserInputState.End then dragging = false end end)
-        end
-    end)
-    frame.InputChanged:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then dragInput = input end
-    end)
-    UserInputService.InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            local delta = input.Position - dragStart
-            frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-        end
-    end)
-end
-MakeDraggable(KeyFrame) MakeDraggable(MainFrame) MakeDraggable(ToggleBtn)
-
+-- ====== ⚙️ LOGIC ====== --
 SubmitBtn.MouseButton1Click:Connect(function()
     if AllowedKeys[TextBox.Text] then KeyFrame:Destroy() MainFrame.Visible = true ToggleBtn.Visible = true end
 end)
 ToggleBtn.MouseButton1Click:Connect(function() MainFrame.Visible = not MainFrame.Visible end)
-SpeedBtn.MouseButton1Click:Connect(function() pcall(function() game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60 end) end)
-JumpBtn.MouseButton1Click:Connect(function() pcall(function() game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120 game.Players.LocalPlayer.Character.Humanoid.UseJumpPower = true end) end)
 
--- [ ⌨️ KEYBOARD ESCAPE LOGIC ] --
-local IsTweening = false
+-- [ 💥 LOGIC ] --
+local IsTweening, LegitKillActive, SmartEspActive = false, false, false
 local TweenService = game:GetService("TweenService")
+
 KeyboardBtn.MouseButton1Click:Connect(function()
-    if IsTweening then IsTweening = false KeyboardBtn.Text = "🏆 ACTIVATE SMOOTH AUTO RUN" return end
-    IsTweening = true KeyboardBtn.Text = "🛑 STOP AUTO RUN"
+    IsTweening = not IsTweening
     task.spawn(function()
-        while IsTweening do
-            task.wait(0.1)
-            local character = game.Players.LocalPlayer.Character
-            local hrp = character and character:FindFirstChild("HumanoidRootPart")
-            if hrp and IsTweening then
-                local targetCFrame = hrp.CFrame * CFrame.new(0, 0, -120)
-                local tween = TweenService:Create(hrp, TweenInfo.new(0.8, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
-                tween:Play() tween.Completed:Wait()
+        while IsTweening do task.wait(0.1)
+            local hrp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+            if hrp then TweenService:Create(hrp, TweenInfo.new(0.8, Enum.EasingStyle.Linear), {CFrame = hrp.CFrame * CFrame.new(0, 0, -120)}):Play() end
+        end
+    end)
+end)
+
+KillAuraBtn.MouseButton1Click:Connect(function()
+    LegitKillActive = not LegitKillActive
+    task.spawn(function()
+        while LegitKillActive do task.wait(0.3)
+            local myChar = game.Players.LocalPlayer.Character
+            local knife = myChar and (myChar:FindFirstChild("Knife") or myChar:FindFirstChildOfClass("Tool"))
+            if myChar and knife then
+                local closest = nil local dist = 350
+                for _, p in pairs(game.Players:GetPlayers()) do
+                    if p ~= game.Players.LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+                        local d = (p.Character.HumanoidRootPart.Position - myChar.HumanoidRootPart.Position).Magnitude
+                        if d < dist then dist = d closest = p.Character end
+                    end
+                end
+                if closest then myChar.Humanoid:MoveTo(closest.HumanoidRootPart.Position) if dist < 12 then knife:Activate() end end
             end
         end
     end)
 end)
-
--- [ 🏡 BROOKHAVEN AUTO-ROB LOGIC ] --
-RobBankBtn.MouseButton1Click:Connect(function()
-    RobBankBtn.Text = "💰 ROBBING BANK SAFE..."
-    task.spawn(function()
-        pcall(function()
-            local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
-            hrp.CFrame = CFrame.new(-22, 10, 45) 
-            task.wait(1)
-            RobBankBtn.Text = "💰 BANK SAFE ROBBED!"
-            task.wait(2)
-            RobBankBtn.Text = "💰 AUTO-ROB BANK & SAFE"
-        end)
-    end)
-end)
-
--- [ 💥 VIOLENCE DISTRICT: SMART LEGIT AUTO-WALK KILL AURA ] --
-local LegitKillActive = false
-KillAuraBtn.MouseButton1Click:Connect(function()
-    if LegitKillActive then 
-        LegitKillActive = false 
-        KillAuraBtn.Text = "⚔️ LEGIT AUTO-WALK KILL (NEED KNIFE)" 
-        return 
-    end
-    
-    LegitKillActive = true 
-    KillAuraBtn.Text = "🛑 LEGIT AUTO-KILL ACTIVE"
-    
-    task.spawn(function()
-        while LegitKillActive do
-            task.wait(0.3)
-            pcall(function()
-                local localPlayer = game.Players.LocalPlayer
-                local myChar = localPlayer.Character
-                local myHrp = myChar and myChar:FindFirstChild("HumanoidRootPart")
-                local myHum = myChar and myChar:FindFirstChildOfClass("Humanoid")
-                
-                -- سکرێپت تەنێ کاتێ دەست پێ دکات کو کێر د دەستێ تە دابیت
-                local knife = myChar and (myChar:FindFirstChild("Knife") or myChar:FindFirstChildOfClass("Tool"))
-                
-                if myHrp and myHum and knife and LegitKillActive then
-                    local closestEnemy = nil
-                    local shortestDistance = 350 -- مەودایێ گەڕیانێ ل سەر نەخشەیی
-                    
-                    for _, player in pairs(game.Players:GetPlayers()) do
-                        if player ~= localPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player.Character:FindFirstChildOfClass("Humanoid").Health > 0 then
-                            local dist = (player.Character.HumanoidRootPart.Position - myHrp.Position).Magnitude
-                            if dist < shortestDistance then
-                                shortestDistance = dist
-                                closestEnemy = player.Character
-                            end
-                        end
-                    end
-                    
-                    -- لڤین بەرەو ڕووی دوژمنی ب شێوازێ مەشیا نەرم (Legit Path Walk) بێ کو کەس حەس بکەت
-                    if closestEnemy and LegitKillActive then
-                        myHum:MoveTo(closestEnemy.HumanoidRootPart.Position)
-                        
-                        -- ئەگەر گەهشتە نێزیک وێ ئێکسەر لێدەدات
-                        if shortestDistance < 12 then
-                            knife:Activate()
-                        end
-                    end
-                end
-            end)
-        end
-    end)
-end)
-
--- [ 💥 VIOLENCE DISTRICT: SMART GREEN/RED ESP LOGIC ] --
-local SmartEspActive = false
-
-local function IsHoldingKnife(player)
-    if not player.Character then return false end
-    -- پشکنین کا ئەرێ کێر د دەست دایە یان د باکپاکێ دایە
-    if player.Character:FindFirstChild("Knife") or player.Character:FindFirstChildOfClass("Tool") or (player:FindFirstChild("Backpack") and player.Backpack:FindFirstChild("Knife")) then
-        return true
-    end
-    return false
-end
-
-local function ApplySmartESP(player)
-    if player == game.Players.LocalPlayer then return end
-    
-    task.spawn(function()
-        while SmartEspActive and player.Character and task.wait(1) do
-            pcall(function()
-                if player.Character then
-                    local highlight = player.Character:FindFirstChild("AnasHubSmartESP")
-                    if not highlight then
-                        highlight = Instance.new("Highlight")
-                        highlight.Name = "AnasHubSmartESP"
-                        highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
-                        highlight.OutlineTransparency = 0
-                        highlight.Adornee = player.Character
-                        highlight.Parent = player.Character
-                    end
-                    
-                    -- گۆڕینا ڕەنگی ل سەر بنەمایێ هەبوونا کێرێ
-                    if IsHoldingKnife(player) then
-                        highlight.FillColor = Color3.fromRGB(255, 0, 0) -- سۆر بۆ ئەوان کۆ کێر هەیە
-                        highlight.FillTransparency = 0.3
-                    else
-                        highlight.FillColor = Color3.fromRGB(0, 255, 100) -- کەسک بۆ یاریزانێن عادی
-                        highlight.FillTransparency = 0.5
-                    end
-                end
-            end)
-        end
-    end)
-end
 
 EspBtn.MouseButton1Click:Connect(function()
-    if SmartEspActive then
-        SmartEspActive = false
-        EspBtn.Text = "👁️ SMART ESP (GREEN/RED KNIFE)"
-        EspBtn.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
-        for _, player in pairs(game.Players:GetPlayers()) do
-            if player.Character and player.Character:FindFirstChild("AnasHubSmartESP") then
-                player.Character.AnasHubSmartESP:Destroy()
-            end
+    SmartEspActive = not SmartEspActive
+    for _, p in pairs(game.Players:GetPlayers()) do
+        if p ~= game.Players.LocalPlayer and p.Character then
+            local h = p.Character:FindFirstChild("AnasHubSmartESP") or Instance.new("Highlight", p.Character)
+            h.Name = "AnasHubSmartESP" h.FillColor = (p.Character:FindFirstChild("Knife") and Color3.fromRGB(255,0,0) or Color3.fromRGB(0,255,100))
         end
-    else
-        SmartEspActive = true
-        EspBtn.Text = "🛑 SMART ESP ACTIVE (ON)"
-        EspBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
-        
-        for _, player in pairs(game.Players:GetPlayers()) do
-            ApplySmartESP(player)
-            player.CharacterAdded:Connect(function()
-                task.wait(0.5)
-                if SmartEspActive then ApplySmartESP(player) end
-            end)
-        end
-        
-        game.Players.PlayerAdded:Connect(function(player)
-            player.CharacterAdded:Connect(function()
-                task.wait(0.5)
-                if SmartEspActive then ApplySmartESP(player) end
-            end)
-        end)
+    end
+end)
+
+ServerJoinBtn.MouseButton1Click:Connect(function()
+    local servers = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?limit=100"))
+    if servers and servers.data then
+        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, servers.data[1].id, game.Players.LocalPlayer)
     end
 end)
