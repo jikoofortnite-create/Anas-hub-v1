@@ -1,5 +1,5 @@
--- [[ ANAS HUB V26.4 - STAGE 14 TARGET EDITION ]] --
--- [[ OPTIMIZED FOR SMOOTH MOBILE GAMEPLAY ]] --
+-- [[ ANAS HUB V26.5 - INSTANT STAGE 14 TELEPORT ]] --
+-- [[ ZERO LAG - DIRECT TARGET ENGINE ]] --
 
 if game:GetService("CoreGui"):FindFirstChild("AnasHubPremium") then
     game:GetService("CoreGui").AnasHubPremium:Destroy()
@@ -72,7 +72,7 @@ Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 14)
 
 local MainTitle = Instance.new("TextLabel", MainFrame)
 MainTitle.Size = UDim2.new(1, 0, 0, 45)
-MainTitle.Text = "✨🔱 ANAS HUB V26.4 - MAIN MENU 🔱✨"
+MainTitle.Text = "✨🔱 ANAS HUB V26.5 - MAIN MENU 🔱✨"
 MainTitle.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
 MainTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
 MainTitle.Font = Enum.Font.GothamBold
@@ -81,9 +81,9 @@ MainTitle.TextSize = 15
 local AutoWinBtn = Instance.new("TextButton", MainFrame)
 AutoWinBtn.Size = UDim2.new(0, 340, 0, 40)
 AutoWinBtn.Position = UDim2.new(0, 30, 0, 60)
-AutoWinBtn.Text = "🏆 AUTO WIN (STAGES 1 - 14)"
-AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
-AutoWinBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+AutoWinBtn.Text = "🏆 INSTANT TELEPORT TO STAGE 14"
+AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 0, 100)
+AutoWinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 AutoWinBtn.Font = Enum.Font.GothamBold
 AutoWinBtn.TextSize = 13
 
@@ -204,56 +204,46 @@ InfJumpBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- [[ 🏆 TARGET AUTO WIN SYSTEM (UP TO STAGE 14) ]] --
-local IsAutoWinning = false
+-- [[ 🏆 DIRECT TARGET TELEPORT ENGINE (NO LOOPS) ]] --
 AutoWinBtn.MouseButton1Click:Connect(function()
-    if IsAutoWinning then return end
-    IsAutoWinning = true
-    AutoWinBtn.Text = "⚡ GOING TO STAGE 14..."
+    AutoWinBtn.Text = "⚡ TELEPORTING NOW..."
     AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
     
     task.spawn(function()
-        local player = game.Players.LocalPlayer
-        
-        -- لۆپ تەنێ هەتا ژمارە ١٤ دچیت
-        for stageNumber = 1, 14 do
-            if not IsAutoWinning then break end
-            
+        pcall(function()
+            local player = game.Players.LocalPlayer
             local character = player.Character or player.CharacterAdded:Wait()
             local hrp = character:WaitForChild("HumanoidRootPart", 5)
-            if not hrp then break end
             
-            local targetPart = nil
-            
-            -- پشکنین بۆ دۆزینەوەیا قۆناغێ
-            for _, object in pairs(workspace:GetDescendants()) do
-                if object:IsA("BasePart") and (object.Name == tostring(stageNumber) or object.Name == "Stage" .. stageNumber or object.Name == "Checkpoint" .. stageNumber) then
-                    targetPart = object
-                    break
+            if hrp then
+                local targetPart = nil
+                
+                -- گەڕیانا ڕاستەوخۆ تەنێ بۆ پارتێ ستەیجێ ١٤ ب بێی چو لۆپ
+                for _, object in pairs(workspace:GetDescendants()) do
+                    if object:IsA("BasePart") and (object.Name == "14" or object.Name == "Stage14" or object.Name == "Stage 14" or object.Name == "Checkpoint14" or object.Name == "Checkpoint 14") then
+                        targetPart = object
+                        break
+                    end
+                end
+                
+                -- ئەگەر ستەیجێ ١٤ هاتە دۆزینەوە، ئێکسەر تە دەباتە وێرێ ب بێی لاگ
+                if targetPart then
+                    hrp.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
+                    AutoWinBtn.Text = "🏁 REACHED STAGE 14!"
+                    AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
+                else
+                    AutoWinBtn.Text = "❌ STAGE 14 NOT FOUND"
+                    AutoWinBtn.BackgroundColor3 = Color3.fromRGB(200, 40, 40)
+                    task.wait(2)
+                    AutoWinBtn.Text = "🏆 INSTANT TELEPORT TO STAGE 14"
+                    AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 0, 100)
                 end
             end
-            
-            if targetPart then
-                -- تیلیپۆرت کرنا نەرم
-                hrp.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
-                task.wait(0.8) -- کاتەکێ باشتر بۆ کەمکرنا لاگی ل سەر مۆبایلێ
-            else
-                -- ئەگەر ل ستەیجێ ٥ گیر بوو، بازدەدەتە سەر ستەیجێ داهاتی
-                if stageNumber == 5 then
-                    task.wait(0.5)
-                    continue
-                end
-            end
-        end
-        
-        -- کاتێ گەهشتە ستەیجێ ١٤، لۆپ خەلاس دبیت و سەرکەفتن دیار دبیت
-        AutoWinBtn.Text = "🏁 REACHED STAGE 14"
-        AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
-        IsAutoWinning = false
+         pcall(function() game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60 end)
+        end)
     end)
 end)
 
 CloseBtn.MouseButton1Click:Connect(function()
-    IsAutoWinning = false
     ScreenGui:Destroy()
 end)
