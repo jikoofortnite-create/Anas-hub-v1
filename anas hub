@@ -1,5 +1,5 @@
--- [[ ANAS HUB V26.6 - POSITION BASED TELEPORT ]] --
--- [[ FIX FOR STAGE NOT FOUND - OPTIMIZED FOR MOBILE ]] --
+-- [[ ANAS HUB V26.7 - POSITION COORDINATE ENGINE ]] --
+-- [[ FIXED FOR TYPE RACE KEYBOARD GAME - NO LAG ]] --
 
 if game:GetService("CoreGui"):FindFirstChild("AnasHubPremium") then
     game:GetService("CoreGui").AnasHubPremium:Destroy()
@@ -72,7 +72,7 @@ Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 14)
 
 local MainTitle = Instance.new("TextLabel", MainFrame)
 MainTitle.Size = UDim2.new(1, 0, 0, 45)
-MainTitle.Text = "✨🔱 ANAS HUB V26.6 - MAIN MENU 🔱✨"
+MainTitle.Text = "✨🔱 ANAS HUB V26.7 - MAIN MENU 🔱✨"
 MainTitle.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
 MainTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
 MainTitle.Font = Enum.Font.GothamBold
@@ -81,9 +81,9 @@ MainTitle.TextSize = 15
 local AutoWinBtn = Instance.new("TextButton", MainFrame)
 AutoWinBtn.Size = UDim2.new(0, 340, 0, 40)
 AutoWinBtn.Position = UDim2.new(0, 30, 0, 60)
-AutoWinBtn.Text = "🚀 TELEPORT TO END LINE (FIXED)"
-AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 0, 100)
-AutoWinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoWinBtn.Text = "🏆 INSTANT TELEPORT TO STAGE 12"
+AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
+AutoWinBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
 AutoWinBtn.Font = Enum.Font.GothamBold
 AutoWinBtn.TextSize = 13
 
@@ -204,9 +204,9 @@ InfJumpBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- [[ 🏆 ADVANCED POSITION-BASED TELEPORT (NO NAME DEPENDENCY) ]] --
+-- [[ 🏆 COORDINATE-BASED POSITION TELEPORT FOR STAGE 12 ]] --
 AutoWinBtn.MouseButton1Click:Connect(function()
-    AutoWinBtn.Text = "⚡ SEARCHING PATH..."
+    AutoWinBtn.Text = "⚡ FLYING TO STAGE 12..."
     AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
     
     task.spawn(function()
@@ -216,36 +216,19 @@ AutoWinBtn.MouseButton1Click:Connect(function()
             local hrp = character:WaitForChild("HumanoidRootPart", 5)
             
             if hrp then
-                local targetPart = nil
-                local maxDistance = 0
+                -- ئەڤ سیستەمە تە دەستبەجێ بە لایێ دروستی یێ هێڵا ڕاکردنێ پاڵدەدەت
+                -- ل سەر بنەمایێ گۆڕینا پۆزیشنێ بێ پشتبەستن ب ناڤێ پارتان
+                local currentCFrame = hrp.CFrame
                 
-                -- د گەڕیانا نوو دا سەیری ناڤی ناکەین، تەنێ ب دویڤ دویرترین پارت دچین کو دکەویتە پێشیا کارەکتەری
-                for _, object in pairs(workspace:GetDescendants()) do
-                    if object:IsA("BasePart") and object.Size.X > 2 and object.Transparency < 1 then
-                        -- دۆزینەوەیا پارتێن کو زۆر دویرن (بۆ قۆناغێن داهاتی)
-                        local dist = (object.Position - hrp.Position).Magnitude
-                        if dist > maxDistance and dist < 800 then -- دڵنیابوون ژ مەودایێ دروست دا نەکەڤیتە دەرڤەی نەخشەیێ
-                            maxDistance = dist
-                            targetPart = object
-                        end
-                    end
-                end
+                -- لێرەدا مەودایێ درێژاهیا هێڵا گەیاندنێ بۆ ئاستێ پێویست ل سەر تەوەرێ سادە زیاد دکەین
+                -- (تەوەرێ هێڵا سەرەکی یا کایێ داهێنراوە)
+                hrp.CFrame = currentCFrame * CFrame.new(0, 2, -450) 
                 
-                -- ئەگەر پارت هاتە دۆزینەوە، ئێکسەر تیلیپۆرت دبیتە پێش ل سەر هێڵێ
-                if targetPart then
-                    hrp.CFrame = targetPart.CFrame + Vector3.new(0, 4, 0)
-                    AutoWinBtn.Text = "🏁 TELEPORTED FORWARD!"
-                    AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
-                    task.wait(1.5)
-                    AutoWinBtn.Text = "🚀 TELEPORT TO END LINE (FIXED)"
-                else
-                    -- ئەگەر سیستەمێ یەکەم کاری پێ نەکرد، دێ ڕاستەوخۆ هێڵا لایێ ڕاست ل سەر تەوەرێ Z بەینە پێش
-                    hrp.CFrame = hrp.CFrame + Vector3.new(0, 3, -150)
-                    AutoWinBtn.Text = "🏁 FORWARD BOOST!"
-                    AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
-                    task.wait(1)
-                    AutoWinBtn.Text = "🚀 TELEPORT TO END LINE (FIXED)"
-                end
+                AutoWinBtn.Text = "🏁 ARRIVED AT STAGE 12!"
+                AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
+                task.wait(1.5)
+                AutoWinBtn.Text = "🏆 INSTANT TELEPORT TO STAGE 12"
+                AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
             end
         end)
     end)
