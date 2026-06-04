@@ -1,5 +1,5 @@
--- [[ ANAS HUB V26.2 - ULTIMATE AUTO WIN FIX ]] --
--- [[ 100% FIXED FOR STAGE ESCAPE GAMES ]] --
+-- [[ ANAS HUB V26.4 - STAGE 14 TARGET EDITION ]] --
+-- [[ OPTIMIZED FOR SMOOTH MOBILE GAMEPLAY ]] --
 
 if game:GetService("CoreGui"):FindFirstChild("AnasHubPremium") then
     game:GetService("CoreGui").AnasHubPremium:Destroy()
@@ -16,7 +16,7 @@ ScreenGui.Name = "AnasHubPremium"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = game:GetService("CoreGui")
 
--- ====== 🔒 1. KEY SYSTEM (FIXED BACKGROUND) ====== --
+-- ====== 🔒 1. KEY SYSTEM ====== --
 local KeyFrame = Instance.new("Frame")
 KeyFrame.Size = UDim2.new(0, 420, 0, 280)
 KeyFrame.Position = UDim2.new(0.3, 0, 0.25, 0)
@@ -34,16 +34,6 @@ BackgroundImage.ScaleType = Enum.ScaleType.Stretch
 BackgroundImage.BackgroundTransparency = 1
 BackgroundImage.Parent = KeyFrame
 Instance.new("UICorner", BackgroundImage).CornerRadius = UDim.new(0, 14)
-
-local KeyTitle = Instance.new("TextLabel", KeyFrame)
-KeyTitle.Size = UDim2.new(1, 0, 0, 35)
-KeyTitle.Position = UDim2.new(0, 0, 0, 12)
-KeyTitle.Text = "⚡ ANAS HUB PREMIUM ⚡"
-KeyTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
-KeyTitle.BackgroundTransparency = 1
-KeyTitle.Font = Enum.Font.GothamBold
-KeyTitle.TextSize = 15
-KeyTitle.ZIndex = 3
 
 local TextBox = Instance.new("TextBox", KeyFrame)
 TextBox.Size = UDim2.new(0, 160, 0, 35)
@@ -82,7 +72,7 @@ Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 14)
 
 local MainTitle = Instance.new("TextLabel", MainFrame)
 MainTitle.Size = UDim2.new(1, 0, 0, 45)
-MainTitle.Text = "✨🔱 ANAS HUB V26 - MAIN MENU 🔱✨"
+MainTitle.Text = "✨🔱 ANAS HUB V26.4 - MAIN MENU 🔱✨"
 MainTitle.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
 MainTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
 MainTitle.Font = Enum.Font.GothamBold
@@ -91,7 +81,7 @@ MainTitle.TextSize = 15
 local AutoWinBtn = Instance.new("TextButton", MainFrame)
 AutoWinBtn.Size = UDim2.new(0, 340, 0, 40)
 AutoWinBtn.Position = UDim2.new(0, 30, 0, 60)
-AutoWinBtn.Text = "🏆 ACTIVATE AUTO WIN (GOD MODE)"
+AutoWinBtn.Text = "🏆 AUTO WIN (STAGES 1 - 14)"
 AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
 AutoWinBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
 AutoWinBtn.Font = Enum.Font.GothamBold
@@ -214,42 +204,56 @@ InfJumpBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- [[ 🏆 ADVANCED AUTO WIN LOGIC ENGINE ]] --
+-- [[ 🏆 TARGET AUTO WIN SYSTEM (UP TO STAGE 14) ]] --
+local IsAutoWinning = false
 AutoWinBtn.MouseButton1Click:Connect(function()
-    AutoWinBtn.Text = "⚡ TELEPORTING..."
+    if IsAutoWinning then return end
+    IsAutoWinning = true
+    AutoWinBtn.Text = "⚡ GOING TO STAGE 14..."
     AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
     
     task.spawn(function()
-        pcall(function()
-            local player = game.Players.LocalPlayer
-            local character = player.Character or player.CharacterAdded:Wait()
-            local hrp = character:WaitForChild("HumanoidRootPart")
+        local player = game.Players.LocalPlayer
+        
+        -- لۆپ تەنێ هەتا ژمارە ١٤ دچیت
+        for stageNumber = 1, 14 do
+            if not IsAutoWinning then break end
             
-            -- پشکنینا گشتی بۆ دۆزینەوەیا پارتێن یاریێ
-            for stageNumber = 1, 100 do -- بازنەیا گەڕیانێ مەزنتر لێهات هەتا قۆناغێن بلند
-                local targetPart = nil
-                
-                -- ڕێگایێ ئێکێ: گەڕیان ب دویڤ ژمارا ستەیجی
-                for _, object in pairs(workspace:GetDescendants()) do
-                    if (object.Name == tostring(stageNumber) or object.Name == "Stage" .. stageNumber or object.Name == "Checkpoint" .. stageNumber) and object:IsA("BasePart") then
-                        targetPart = object
-                        break
-                    end
-                end
-                
-                -- ئەگەر پارت هاتە دۆزینەوە، تیلیپۆرت بکە ب شێوازەکێ پارێزراو
-                if targetPart then
-                    hrp.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
-                    task.wait(0.6) -- کاتەکێ گونجاو دا سیستەمێ یاریێ تە بلۆک نەکەت
+            local character = player.Character or player.CharacterAdded:Wait()
+            local hrp = character:WaitForChild("HumanoidRootPart", 5)
+            if not hrp then break end
+            
+            local targetPart = nil
+            
+            -- پشکنین بۆ دۆزینەوەیا قۆناغێ
+            for _, object in pairs(workspace:GetDescendants()) do
+                if object:IsA("BasePart") and (object.Name == tostring(stageNumber) or object.Name == "Stage" .. stageNumber or object.Name == "Checkpoint" .. stageNumber) then
+                    targetPart = object
+                    break
                 end
             end
             
-            AutoWinBtn.Text = "🏆 AUTO WIN ACTIVATED"
-            AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
-        end)
+            if targetPart then
+                -- تیلیپۆرت کرنا نەرم
+                hrp.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
+                task.wait(0.8) -- کاتەکێ باشتر بۆ کەمکرنا لاگی ل سەر مۆبایلێ
+            else
+                -- ئەگەر ل ستەیجێ ٥ گیر بوو، بازدەدەتە سەر ستەیجێ داهاتی
+                if stageNumber == 5 then
+                    task.wait(0.5)
+                    continue
+                end
+            end
+        end
+        
+        -- کاتێ گەهشتە ستەیجێ ١٤، لۆپ خەلاس دبیت و سەرکەفتن دیار دبیت
+        AutoWinBtn.Text = "🏁 REACHED STAGE 14"
+        AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
+        IsAutoWinning = false
     end)
 end)
 
 CloseBtn.MouseButton1Click:Connect(function()
+    IsAutoWinning = false
     ScreenGui:Destroy()
 end)
