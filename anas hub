@@ -1,0 +1,143 @@
+-- [[ ANAS HUB V2 - KEYBOARD ESCAPE ]] --
+
+if game.CoreGui:FindFirstChild("AnasHubKeyboard") then
+    game.CoreGui.AnasHubKeyboard:Destroy()
+end
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "AnasHubKeyboard"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = game.CoreGui
+
+-- کادرا سەرەکی (Main UI)
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 480, 0, 320)
+MainFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(22, 22, 28)
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = ScreenGui
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 12)
+MainCorner.Parent = MainFrame
+
+-- ناڤ و نازناڤێ مینیۆیێ
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 50)
+Title.BackgroundColor3 = Color3.fromRGB(30, 30, 38)
+Title.Text = "⌨️ ANAS HUB - KEYBOARD ESCAPE ⌨="
+Title.TextColor3 = Color3.fromRGB(0, 255, 127) -- ڕەنگێ کەسکێ گەش
+Title.TextSize = 18
+Title.Font = Enum.Font.SourceSansBold
+Title.Parent = MainFrame
+
+local TitleCorner = Instance.new("UICorner")
+TitleCorner.CornerRadius = UDim.new(0, 12)
+TitleCorner.Parent = Title
+
+-- لایێ چەپێ بۆ تەبەکان (Tab Section)
+local TabContainer = Instance.new("Frame")
+TabContainer.Size = UDim2.new(0, 130, 1, -50)
+TabContainer.Position = UDim2.new(0, 0, 0, 50)
+TabContainer.BackgroundColor3 = Color3.fromRGB(26, 26, 33)
+TabContainer.Parent = MainFrame
+
+-- لایێ ڕاستێ بۆ جێبەجێکرنا فەرمانان (Main Content)
+local ContentContainer = Instance.new("Frame")
+ContentContainer.Size = UDim2.new(1, -130, 1, -50)
+ContentContainer.Position = UDim2.new(0, 130, 0, 50)
+ContentContainer.BackgroundColor3 = Color3.fromRGB(22, 22, 28)
+ContentContainer.Parent = MainFrame
+
+-- فەرمانا ١: زێدەکرنا خێراییا لڤینێ (Speed Hack)
+local SpeedBtn = Instance.new("TextButton")
+SpeedBtn.Size = UDim2.new(0.9, 0, 0, 40)
+SpeedBtn.Position = UDim2.new(0.05, 0, 0.1, 0)
+SpeedBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+SpeedBtn.Text = "⚡ WalkSpeed (60)"
+SpeedBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedBtn.Font = Enum.Font.SourceSansBold
+SpeedBtn.TextSize = 14
+SpeedBtn.Parent = ContentContainer
+
+local SpeedCorner = Instance.new("UICorner")
+SpeedCorner.CornerRadius = UDim.new(0, 6)
+SpeedCorner.Parent = SpeedBtn
+
+SpeedBtn.MouseButton1Click:Connect(function()
+    local player = game.Players.LocalPlayer
+    if player.Character and player.Character:FindFirstChild("Humanoid") then
+        player.Character.Humanoid.WalkSpeed = 60
+    end
+end)
+
+-- فەرمانا ٢: لادانا جاذبێ / بازدانا بلند (Jump Power)
+local JumpBtn = Instance.new("TextButton")
+JumpBtn.Size = UDim2.new(0.9, 0, 0, 40)
+JumpBtn.Position = UDim2.new(0.05, 0, 0.3, 0)
+JumpBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+JumpBtn.Text = "🚀 JumpPower (120)"
+JumpBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+JumpBtn.Font = Enum.Font.SourceSansBold
+JumpBtn.TextSize = 14
+JumpBtn.Parent = ContentContainer
+
+local JumpCorner = Instance.new("UICorner")
+JumpCorner.CornerRadius = UDim.new(0, 6)
+JumpCorner.Parent = JumpBtn
+
+JumpBtn.MouseButton1Click:Connect(function()
+    local player = game.Players.LocalPlayer
+    if player.Character and player.Character:FindFirstChild("Humanoid") then
+        player.Character.Humanoid.JumpPower = 120
+        player.Character.Humanoid.UseJumpPower = true
+    end
+end)
+
+-- فەرمانا ٣: دۆزینەوەیا ڕێکا ڕاست کاتێ دیوار هەن (Noclip Toggle)
+local NoclipBtn = Instance.new("TextButton")
+NoclipBtn.Size = UDim2.new(0.9, 0, 0, 40)
+NoclipBtn.Position = UDim2.new(0.05, 0, 0.5, 0)
+NoclipBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+NoclipBtn.Text = "👻 Toggle Noclip"
+NoclipBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+NoclipBtn.Font = Enum.Font.SourceSansBold
+NoclipBtn.TextSize = 14
+NoclipBtn.Parent = ContentContainer
+
+local NoclipCorner = Instance.new("UICorner")
+NoclipCorner.CornerRadius = UDim.new(0, 6)
+NoclipCorner.Parent = NoclipBtn
+
+local noclip = false
+NoclipBtn.MouseButton1Click:Connect(function()
+    noclip = not noclip
+    if noclip then NoclipBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 0) else NoclipBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 45) end
+    game:GetService("RunService").Stepped:Connect(function()
+        if noclip and game.Players.LocalPlayer.Character then
+            for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("BasePart") then v.CanCollide = false end
+            end
+        end
+    end)
+end)
+
+-- دوگمەیا داخستنێ (Close Menu)
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 35, 0, 35)
+CloseBtn.Position = UDim2.new(1, -42, 0, 7)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(190, 40, 40)
+CloseBtn.Text = "X"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.Font = Enum.Font.SourceSansBold
+CloseBtn.TextSize = 16
+CloseBtn.Parent = MainFrame
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(0, 8)
+CloseCorner.Parent = CloseBtn
+
+CloseBtn.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
