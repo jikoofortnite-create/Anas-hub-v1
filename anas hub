@@ -1,205 +1,43 @@
--- [[ ANAS HUB V27.3 - ULTIMATE MULTI-GAME & ESP EDITION ]] --
--- [[ SUPPORTED: KEYBOARD ESCAPE | BROOKHAVEN | VIOLENCE DISTRICT ]] --
+-- [[ ANAS HUB V27.5 - THE ULTIMATE FULL SCRIPT ]] --
+-- [[ FEATURES: MAGNET, NOCLIP, AUTO-KILL, ESP, SERVER-JOIN, IDENTITY PROTECTION ]] --
 
 if game:GetService("CoreGui"):FindFirstChild("AnasHubPremium") then
     game:GetService("CoreGui").AnasHubPremium:Destroy()
 end
 
-local AllowedKeys = {
-    ["ANAS_VIP_999"] = true,
-    ["ANAS_PREMIUM_5USD"] = true,
-    ["KEY_2026_ANAS"] = true
-}
+-- [ 1. IDENTITY PROTECTION (NO EARRINGS & HANDS IN SHORTS) ] --
+task.spawn(function()
+    while task.wait(1) do
+        local char = game.Players.LocalPlayer.Character
+        if char then
+            for _, item in pairs(char:GetDescendants()) do
+                if item.Name:lower():find("earring") then item:Destroy() end
+            end
+            if char:FindFirstChild("Animate") then
+                char.Animate.idle.Animation1.AnimationId = "rbxassetid://507766388"
+                char.Animate.idle.Animation2.AnimationId = "rbxassetid://507766388"
+            end
+        end
+    end
+end)
 
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "AnasHubPremium"
-ScreenGui.ResetOnSpawn = false
-ScreenGui.Parent = game:GetService("CoreGui")
-
--- ====== 🔒 1. KEY SYSTEM ====== --
-local KeyFrame = Instance.new("Frame")
-KeyFrame.Size = UDim2.new(0, 420, 0, 280)
-KeyFrame.Position = UDim2.new(0.3, 0, 0.25, 0)
-KeyFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
-KeyFrame.Active = true
-KeyFrame.Parent = ScreenGui
-Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0, 14)
-
-local TextBox = Instance.new("TextBox", KeyFrame)
-TextBox.Size = UDim2.new(0, 160, 0, 35)
-TextBox.Position = UDim2.new(0, 130, 0, 125)
-TextBox.PlaceholderText = "Key..."
-TextBox.Text = ""
-TextBox.BackgroundColor3 = Color3.fromRGB(12, 22, 40)
-TextBox.TextColor3 = Color3.fromRGB(0, 255, 255)
-TextBox.Font = Enum.Font.GothamBold
-TextBox.TextSize = 13
-TextBox.ZIndex = 3
-Instance.new("UICorner", TextBox).CornerRadius = UDim.new(0, 8)
-
-local SubmitBtn = Instance.new("TextButton", KeyFrame)
-SubmitBtn.Size = UDim2.new(0, 180, 0, 42)
-SubmitBtn.Position = UDim2.new(0, 120, 0, 200)
-SubmitBtn.Text = "🔓 ACCESS"
-SubmitBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
-SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-SubmitBtn.Font = Enum.Font.GothamBold
-SubmitBtn.TextSize = 14
-Instance.new("UICorner", SubmitBtn).CornerRadius = UDim.new(0, 10)
-
--- ====== 👑 2. MAIN MENU ====== --
-local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 450, 0, 350)
-MainFrame.Position = UDim2.new(0.3, 0, 0.25, 0)
-MainFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
-MainFrame.Visible = false 
-MainFrame.Active = true
-MainFrame.Parent = ScreenGui
+-- [ 2. GUI SETUP ] --
+local ScreenGui = Instance.new("ScreenGui", game:GetService("CoreGui"))
+local MainFrame = Instance.new("Frame", ScreenGui)
+MainFrame.Size, MainFrame.Position, MainFrame.BackgroundColor3 = UDim2.new(0, 450, 0, 400), UDim2.new(0.3, 0, 0.25, 0), Color3.fromRGB(15, 15, 20)
 Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 14)
 
-local MainTitle = Instance.new("TextLabel", MainFrame)
-MainTitle.Size = UDim2.new(1, 0, 0, 45)
-MainTitle.Text = "✨🔱 ANAS HUB V27.3 - ULTIMATE MENU 🔱✨"
-MainTitle.BackgroundColor3 = Color3.fromRGB(18, 18, 26)
-MainTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
-MainTitle.Font = Enum.Font.GothamBold
-MainTitle.TextSize = 14
-
--- --- 📑 TABS CREATION ---
-local TabButtons = Instance.new("Frame", MainFrame)
-TabButtons.Size = UDim2.new(0, 120, 1, -45)
-TabButtons.Position = UDim2.new(0, 0, 0, 45)
-TabButtons.BackgroundColor3 = Color3.fromRGB(14, 14, 20)
-
-local Container = Instance.new("Frame", MainFrame)
-Container.Size = UDim2.new(1, -130, 1, -55)
-Container.Position = UDim2.new(0, 125, 0, 50)
-Container.BackgroundTransparency = 1
-
-local Tabs = {}
-local function CreateTab(name, pos)
-    local Btn = Instance.new("TextButton", TabButtons)
-    Btn.Size = UDim2.new(1, -10, 0, 40)
-    Btn.Position = UDim2.new(0, 5, 0, pos)
-    Btn.Text = name
-    Btn.BackgroundColor3 = Color3.fromRGB(22, 22, 30)
-    Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Btn.Font = Enum.Font.GothamBold
-    Btn.TextSize = 11
-    Instance.new("UICorner", Btn).CornerRadius = UDim.new(0, 6)
-    
-    local Frame = Instance.new("Frame", Container)
-    Frame.Size = UDim2.new(1, 0, 1, 0)
-    Frame.BackgroundTransparency = 1
-    Frame.Visible = false
-    
-    Btn.MouseButton1Click:Connect(function()
-        for _, t in pairs(Tabs) do t.Frame.Visible = false t.Btn.BackgroundColor3 = Color3.fromRGB(22, 22, 30) end
-        Frame.Visible = true
-        Btn.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
-    end)
-    
-    Tabs[name] = {Frame = Frame, Btn = Btn}
-    return Frame
+local function CreateButton(name, pos, func)
+    local Btn = Instance.new("TextButton", MainFrame)
+    Btn.Size, Btn.Position, Btn.Text = UDim2.new(0, 400, 0, 40), UDim2.new(0, 25, 0, pos), name
+    Btn.MouseButton1Click:Connect(func)
+    return Btn
 end
 
-local Tab1 = CreateTab("⌨️ Keyboard", 10)
-local Tab2 = CreateTab("🏡 Brookhaven", 55)
-local Tab3 = CreateTab("💥 Violence D.", 100)
-local Tab4 = CreateTab("⚡ Player", 145)
-
--- ====== ⌨️ TAB 1: KEYBOARD ESCAPE ====== --
-local KeyboardBtn = Instance.new("TextButton", Tab1)
-KeyboardBtn.Size = UDim2.new(1, -20, 0, 45)
-KeyboardBtn.Position = UDim2.new(0, 10, 0, 20)
-KeyboardBtn.Text = "🏆 ACTIVATE SMOOTH AUTO RUN"
-KeyboardBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
-KeyboardBtn.Font = Enum.Font.GothamBold
-KeyboardBtn.TextSize = 12
-Instance.new("UICorner", KeyboardBtn).CornerRadius = UDim.new(0, 8)
-
--- ====== 🏡 TAB 2: BROOKHAVEN RP ====== --
-local RobBankBtn = Instance.new("TextButton", Tab2)
-RobBankBtn.Size = UDim2.new(1, -20, 0, 45)
-RobBankBtn.Position = UDim2.new(0, 10, 0, 20)
-RobBankBtn.Text = "💰 AUTO-ROB BANK & SAFE"
-RobBankBtn.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
-RobBankBtn.Font = Enum.Font.GothamBold
-RobBankBtn.TextSize = 12
-Instance.new("UICorner", RobBankBtn).CornerRadius = UDim.new(0, 8)
-
--- ====== 💥 TAB 3: VIOLENCE DISTRICT ====== --
-local KillAuraBtn = Instance.new("TextButton", Tab3)
-KillAuraBtn.Size = UDim2.new(1, -20, 0, 40)
-KillAuraBtn.Position = UDim2.new(0, 10, 0, 10)
-KillAuraBtn.Text = "⚔️ LEGIT AUTO-WALK KILL"
-KillAuraBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
-KillAuraBtn.Font = Enum.Font.GothamBold
-KillAuraBtn.TextSize = 11
-Instance.new("UICorner", KillAuraBtn).CornerRadius = UDim.new(0, 8)
-
-local EspBtn = Instance.new("TextButton", Tab3)
-EspBtn.Size = UDim2.new(1, -20, 0, 40)
-EspBtn.Position = UDim2.new(0, 10, 0, 60)
-EspBtn.Text = "👁️ SMART ESP (GREEN/RED KNIFE)"
-EspBtn.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
-EspBtn.Font = Enum.Font.GothamBold
-EspBtn.TextSize = 11
-Instance.new("UICorner", EspBtn).CornerRadius = UDim.new(0, 8)
-
-local ServerJoinBtn = Instance.new("TextButton", Tab3)
-ServerJoinBtn.Size = UDim2.new(1, -20, 0, 40)
-ServerJoinBtn.Position = UDim2.new(0, 10, 0, 110)
-ServerJoinBtn.Text = "🌍 JOIN NEAR-START SERVER (1m)"
-ServerJoinBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
-ServerJoinBtn.Font = Enum.Font.GothamBold
-ServerJoinBtn.TextSize = 11
-Instance.new("UICorner", ServerJoinBtn).CornerRadius = UDim.new(0, 8)
-
--- ====== ⚡ TAB 4: PLAYER MODS ====== --
-local SpeedBtn = Instance.new("TextButton", Tab4)
-SpeedBtn.Size = UDim2.new(0, 140, 0, 40)
-SpeedBtn.Position = UDim2.new(0, 10, 0, 20)
-SpeedBtn.Text = "⚡ WalkSpeed (60)"
-SpeedBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
-SpeedBtn.Font = Enum.Font.GothamBold
-SpeedBtn.TextSize = 12
-Instance.new("UICorner", SpeedBtn).CornerRadius = UDim.new(0, 6)
-
--- ====== 📱 TOGGLE ====== --
-local ToggleBtn = Instance.new("TextButton")
-ToggleBtn.Size = UDim2.new(0, 60, 0, 60)
-ToggleBtn.Position = UDim2.new(0.02, 0, 0.4, 0)
-ToggleBtn.Text = "ANAS"
-ToggleBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
-ToggleBtn.Visible = false
-ToggleBtn.Parent = ScreenGui
-Instance.new("UICorner", ToggleBtn).CornerRadius = UDim.new(0, 30)
-
--- ====== ⚙️ LOGIC ====== --
-SubmitBtn.MouseButton1Click:Connect(function()
-    if AllowedKeys[TextBox.Text] then KeyFrame:Destroy() MainFrame.Visible = true ToggleBtn.Visible = true end
-end)
-ToggleBtn.MouseButton1Click:Connect(function() MainFrame.Visible = not MainFrame.Visible end)
-
--- [ 💥 LOGIC ] --
-local IsTweening, LegitKillActive, SmartEspActive = false, false, false
-local TweenService = game:GetService("TweenService")
-
-KeyboardBtn.MouseButton1Click:Connect(function()
-    IsTweening = not IsTweening
+-- [ 3. FUNCTIONS ] --
+CreateButton("⚔️ LEGIT AUTO-KILL", 50, function()
     task.spawn(function()
-        while IsTweening do task.wait(0.1)
-            local hrp = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-            if hrp then TweenService:Create(hrp, TweenInfo.new(0.8, Enum.EasingStyle.Linear), {CFrame = hrp.CFrame * CFrame.new(0, 0, -120)}):Play() end
-        end
-    end)
-end)
-
-KillAuraBtn.MouseButton1Click:Connect(function()
-    LegitKillActive = not LegitKillActive
-    task.spawn(function()
-        while LegitKillActive do task.wait(0.3)
+        while task.wait(0.3) do
             local myChar = game.Players.LocalPlayer.Character
             local knife = myChar and (myChar:FindFirstChild("Knife") or myChar:FindFirstChildOfClass("Tool"))
             if myChar and knife then
@@ -216,19 +54,39 @@ KillAuraBtn.MouseButton1Click:Connect(function()
     end)
 end)
 
-EspBtn.MouseButton1Click:Connect(function()
-    SmartEspActive = not SmartEspActive
+CreateButton("👁️ SMART ESP (RED/GREEN)", 100, function()
     for _, p in pairs(game.Players:GetPlayers()) do
         if p ~= game.Players.LocalPlayer and p.Character then
-            local h = p.Character:FindFirstChild("AnasHubSmartESP") or Instance.new("Highlight", p.Character)
-            h.Name = "AnasHubSmartESP" h.FillColor = (p.Character:FindFirstChild("Knife") and Color3.fromRGB(255,0,0) or Color3.fromRGB(0,255,100))
+            local h = p.Character:FindFirstChild("AnasHubESP") or Instance.new("Highlight", p.Character)
+            h.Name = "AnasHubESP" 
+            h.FillColor = (p.Character:FindFirstChild("Knife") and Color3.fromRGB(255,0,0) or Color3.fromRGB(0,255,100))
         end
     end
 end)
 
-ServerJoinBtn.MouseButton1Click:Connect(function()
-    local servers = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?limit=100"))
-    if servers and servers.data then
-        game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, servers.data[1].id, game.Players.LocalPlayer)
-    end
+CreateButton("🧲 MAGNET ITEMS", 150, function()
+    task.spawn(function()
+        while task.wait(0.5) do
+            for _, item in pairs(workspace:GetDescendants()) do
+                if item:IsA("Tool") and item:FindFirstChild("Handle") then
+                    item.Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                end
+            end
+        end
+    end)
 end)
+
+CreateButton("👻 GHOST MODE (NOCLIP)", 200, function()
+    game:GetService("RunService").Stepped:Connect(function()
+        for _, p in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if p:IsA("BasePart") then p.CanCollide = false end
+        end
+    end)
+end)
+
+CreateButton("🌍 JOIN NEAR-START SERVER", 250, function()
+    local s = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?limit=100"))
+    if s and s.data then game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, s.data[1].id, game.Players.LocalPlayer) end
+end)
+
+print("ANAS HUB V27.5 LOADED SUCCESSFULLY")
