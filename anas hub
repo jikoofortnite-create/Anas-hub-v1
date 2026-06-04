@@ -1,5 +1,5 @@
--- [[ ANAS HUB V26 - IMAGE BACKGROUND EDITION ]] --
--- [[ FEATURED WITH KEY IMAGE 1116.jpg ]] --
+-- [[ ANAS HUB V26.1 - IMAGE FIXED EDITION ]] --
+-- [[ 100% WORKING FOR MOBILE EXECUTORS ]] --
 
 if game:GetService("CoreGui"):FindFirstChild("AnasHubPremium") then
     game:GetService("CoreGui").AnasHubPremium:Destroy()
@@ -16,63 +16,63 @@ ScreenGui.Name = "AnasHubPremium"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = game:GetService("CoreGui")
 
--- ====== 🔒 1. KEY SYSTEM WITH IMAGE BACKDROP ====== --
+-- ====== 🔒 1. KEY SYSTEM (FIXED BACKGROUND) ====== --
 local KeyFrame = Instance.new("Frame")
-KeyFrame.Size = UDim2.new(0, 450, 0, 320) -- قەبارە مەزنتر لێهات دا وێنە جوان دیار بیت
-KeyFrame.Position = UDim2.new(0.32, 0, 0.25, 0)
-KeyFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
+KeyFrame.Size = UDim2.new(0, 420, 0, 280) -- گونجاندن دگەل شاشا مۆبایلێ وەک وێنەی
+KeyFrame.Position = UDim2.new(0.3, 0, 0.25, 0)
+KeyFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 KeyFrame.Active = true
 KeyFrame.Parent = ScreenGui
 
-Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0, 16)
+Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0, 14)
 
--- جێگیرکرنا وێنێ 1116.jpg وەک باکگراوند
+-- لۆدکرنا وێنێ 1116.jpg ب ئایدییا فەرمی یا باکگراوندی
 local BackgroundImage = Instance.new("ImageLabel")
 BackgroundImage.Name = "KeyBackgroundImg"
 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
 BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
-BackgroundImage.Image = "rbxassetid://132717834571026" -- لێرە ئایدییا وێنێ 1116.jpg هاتیە دانان
+BackgroundImage.Image = "rbxassetid://132742918428272" -- ئایدییا فەرمی یا هاتیە ڕاستکرن بۆ مۆبایلێ
 BackgroundImage.ScaleType = Enum.ScaleType.Stretch
 BackgroundImage.BackgroundTransparency = 1
 BackgroundImage.Parent = KeyFrame
-Instance.new("UICorner", BackgroundImage).CornerRadius = UDim.new(0, 16)
+Instance.new("UICorner", BackgroundImage).CornerRadius = UDim.new(0, 14)
 
--- ناونیشانێ مینیۆیێ ل سەر وێنەی
+-- ناونیشانێ ل سەر شاشێ
 local KeyTitle = Instance.new("TextLabel", KeyFrame)
 KeyTitle.Size = UDim2.new(1, 0, 0, 35)
-KeyTitle.Position = UDim2.new(0, 0, 0, 10)
+KeyTitle.Position = UDim2.new(0, 0, 0, 12)
 KeyTitle.Text = "⚡ ANAS HUB PREMIUM ⚡"
 KeyTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
 KeyTitle.BackgroundTransparency = 1
 KeyTitle.Font = Enum.Font.GothamBold
-KeyTitle.TextSize = 16
+KeyTitle.TextSize = 15
 KeyTitle.ZIndex = 3
 
--- جهێ نووسینا کلیلێ (ڕێک د ناڤ دڵێ بازنێ کلیلێ دا)
+-- جهێ نووسینا کلیلێ (TextBox)
 local TextBox = Instance.new("TextBox", KeyFrame)
-TextBox.Size = UDim2.new(0, 110, 0, 35) -- قەبارە گونجاو بۆ ناڤ بازنێ کلیلێ
-TextBox.Position = UDim2.new(0, 130, 0, 142) -- جهێ ڕێک ل ناو بازنێ وێنێ 1116.jpg
+TextBox.Size = UDim2.new(0, 160, 0, 35)
+TextBox.Position = UDim2.new(0, 130, 0, 125) -- جهێ ناوەڕاست بۆ کلیلێ
 TextBox.PlaceholderText = "Key..."
 TextBox.Text = ""
-TextBox.BackgroundColor3 = Color3.fromRGB(15, 25, 45)
-TextBox.BackgroundTransparency = 0.3 -- کێمەک ڕوون دا وێنێ پشت خۆ نەشارێتەوە
+TextBox.BackgroundColor3 = Color3.fromRGB(12, 22, 40)
+TextBox.BackgroundTransparency = 0.2
 TextBox.TextColor3 = Color3.fromRGB(0, 255, 255)
 TextBox.Font = Enum.Font.GothamBold
-TextBox.TextSize = 12
+TextBox.TextSize = 13
 TextBox.ZIndex = 3
-Instance.new("UICorner", TextBox).CornerRadius = UDim.new(0, 6)
+Instance.new("UICorner", TextBox).CornerRadius = UDim.new(0, 8)
 
--- دوگمەیا پشکنینێ ل خوارێ
+-- دوگمەیا ACCESS (مەکسی ڕێک وەک شاشا تە)
 local SubmitBtn = Instance.new("TextButton", KeyFrame)
-SubmitBtn.Size = UDim2.new(0, 140, 0, 40)
-SubmitBtn.Position = UDim2.new(0, 155, 0, 250)
+SubmitBtn.Size = UDim2.new(0, 180, 0, 42)
+SubmitBtn.Position = UDim2.new(0, 120, 0, 200)
 SubmitBtn.Text = "🔓 ACCESS"
 SubmitBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
 SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 SubmitBtn.Font = Enum.Font.GothamBold
 SubmitBtn.TextSize = 14
 SubmitBtn.ZIndex = 3
-Instance.new("UICorner", SubmitBtn).CornerRadius = UDim.new(0, 8)
+Instance.new("UICorner", SubmitBtn).CornerRadius = UDim.new(0, 10)
 
 -- ====== 👑 2. MAIN MENU ====== --
 local MainFrame = Instance.new("Frame")
