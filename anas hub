@@ -1,5 +1,5 @@
--- [[ ANAS HUB V26.5 - INSTANT STAGE 14 TELEPORT ]] --
--- [[ ZERO LAG - DIRECT TARGET ENGINE ]] --
+-- [[ ANAS HUB V26.6 - POSITION BASED TELEPORT ]] --
+-- [[ FIX FOR STAGE NOT FOUND - OPTIMIZED FOR MOBILE ]] --
 
 if game:GetService("CoreGui"):FindFirstChild("AnasHubPremium") then
     game:GetService("CoreGui").AnasHubPremium:Destroy()
@@ -72,7 +72,7 @@ Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 14)
 
 local MainTitle = Instance.new("TextLabel", MainFrame)
 MainTitle.Size = UDim2.new(1, 0, 0, 45)
-MainTitle.Text = "✨🔱 ANAS HUB V26.5 - MAIN MENU 🔱✨"
+MainTitle.Text = "✨🔱 ANAS HUB V26.6 - MAIN MENU 🔱✨"
 MainTitle.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
 MainTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
 MainTitle.Font = Enum.Font.GothamBold
@@ -81,7 +81,7 @@ MainTitle.TextSize = 15
 local AutoWinBtn = Instance.new("TextButton", MainFrame)
 AutoWinBtn.Size = UDim2.new(0, 340, 0, 40)
 AutoWinBtn.Position = UDim2.new(0, 30, 0, 60)
-AutoWinBtn.Text = "🏆 INSTANT TELEPORT TO STAGE 14"
+AutoWinBtn.Text = "🚀 TELEPORT TO END LINE (FIXED)"
 AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 0, 100)
 AutoWinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 AutoWinBtn.Font = Enum.Font.GothamBold
@@ -204,9 +204,9 @@ InfJumpBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- [[ 🏆 DIRECT TARGET TELEPORT ENGINE (NO LOOPS) ]] --
+-- [[ 🏆 ADVANCED POSITION-BASED TELEPORT (NO NAME DEPENDENCY) ]] --
 AutoWinBtn.MouseButton1Click:Connect(function()
-    AutoWinBtn.Text = "⚡ TELEPORTING NOW..."
+    AutoWinBtn.Text = "⚡ SEARCHING PATH..."
     AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
     
     task.spawn(function()
@@ -217,29 +217,36 @@ AutoWinBtn.MouseButton1Click:Connect(function()
             
             if hrp then
                 local targetPart = nil
+                local maxDistance = 0
                 
-                -- گەڕیانا ڕاستەوخۆ تەنێ بۆ پارتێ ستەیجێ ١٤ ب بێی چو لۆپ
+                -- د گەڕیانا نوو دا سەیری ناڤی ناکەین، تەنێ ب دویڤ دویرترین پارت دچین کو دکەویتە پێشیا کارەکتەری
                 for _, object in pairs(workspace:GetDescendants()) do
-                    if object:IsA("BasePart") and (object.Name == "14" or object.Name == "Stage14" or object.Name == "Stage 14" or object.Name == "Checkpoint14" or object.Name == "Checkpoint 14") then
-                        targetPart = object
-                        break
+                    if object:IsA("BasePart") and object.Size.X > 2 and object.Transparency < 1 then
+                        -- دۆزینەوەیا پارتێن کو زۆر دویرن (بۆ قۆناغێن داهاتی)
+                        local dist = (object.Position - hrp.Position).Magnitude
+                        if dist > maxDistance and dist < 800 then -- دڵنیابوون ژ مەودایێ دروست دا نەکەڤیتە دەرڤەی نەخشەیێ
+                            maxDistance = dist
+                            targetPart = object
+                        end
                     end
                 end
                 
-                -- ئەگەر ستەیجێ ١٤ هاتە دۆزینەوە، ئێکسەر تە دەباتە وێرێ ب بێی لاگ
+                -- ئەگەر پارت هاتە دۆزینەوە، ئێکسەر تیلیپۆرت دبیتە پێش ل سەر هێڵێ
                 if targetPart then
-                    hrp.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
-                    AutoWinBtn.Text = "🏁 REACHED STAGE 14!"
+                    hrp.CFrame = targetPart.CFrame + Vector3.new(0, 4, 0)
+                    AutoWinBtn.Text = "🏁 TELEPORTED FORWARD!"
                     AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
+                    task.wait(1.5)
+                    AutoWinBtn.Text = "🚀 TELEPORT TO END LINE (FIXED)"
                 else
-                    AutoWinBtn.Text = "❌ STAGE 14 NOT FOUND"
-                    AutoWinBtn.BackgroundColor3 = Color3.fromRGB(200, 40, 40)
-                    task.wait(2)
-                    AutoWinBtn.Text = "🏆 INSTANT TELEPORT TO STAGE 14"
-                    AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 0, 100)
+                    -- ئەگەر سیستەمێ یەکەم کاری پێ نەکرد، دێ ڕاستەوخۆ هێڵا لایێ ڕاست ل سەر تەوەرێ Z بەینە پێش
+                    hrp.CFrame = hrp.CFrame + Vector3.new(0, 3, -150)
+                    AutoWinBtn.Text = "🏁 FORWARD BOOST!"
+                    AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
+                    task.wait(1)
+                    AutoWinBtn.Text = "🚀 TELEPORT TO END LINE (FIXED)"
                 end
             end
-         pcall(function() game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60 end)
         end)
     end)
 end)
