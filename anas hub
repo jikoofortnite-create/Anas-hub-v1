@@ -1,9 +1,10 @@
--- [[ ANAS HUB V22 - 100% FIXED GLOBAL UI ]] --
-if game.CoreGui:FindFirstChild("AnasHubPremium") then
-    game.CoreGui.AnasHubPremium:Destroy()
+-- [[ ANAS HUB V26 - IMAGE BACKGROUND EDITION ]] --
+-- [[ FEATURED WITH KEY IMAGE 1116.jpg ]] --
+
+if game:GetService("CoreGui"):FindFirstChild("AnasHubPremium") then
+    game:GetService("CoreGui").AnasHubPremium:Destroy()
 end
 
--- [[ 🔑 ALLOWED KEYS ]] --
 local AllowedKeys = {
     ["ANAS_VIP_999"] = true,
     ["ANAS_PREMIUM_5USD"] = true,
@@ -13,403 +14,225 @@ local AllowedKeys = {
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "AnasHubPremium"
 ScreenGui.ResetOnSpawn = false
-ScreenGui.Parent = game.CoreGui
+ScreenGui.Parent = game:GetService("CoreGui")
 
--- ====== 🏢 1. KEY WINDOW ====== --
+-- ====== 🔒 1. KEY SYSTEM WITH IMAGE BACKDROP ====== --
 local KeyFrame = Instance.new("Frame")
-KeyFrame.Size = UDim2.new(0, 300, 0, 160)
-KeyFrame.Position = UDim2.new(0.35, 0, 0.35, 0)
-KeyFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+KeyFrame.Size = UDim2.new(0, 450, 0, 320) -- قەبارە مەزنتر لێهات دا وێنە جوان دیار بیت
+KeyFrame.Position = UDim2.new(0.32, 0, 0.25, 0)
+KeyFrame.BackgroundColor3 = Color3.fromRGB(10, 10, 15)
 KeyFrame.Active = true
-KeyFrame.Draggable = true
 KeyFrame.Parent = ScreenGui
 
-local KeyCorner = Instance.new("UICorner")
-KeyCorner.CornerRadius = UDim.new(0, 10)
-KeyCorner.Parent = KeyFrame
+Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0, 16)
 
-local KeyTitle = Instance.new("TextLabel")
-KeyTitle.Size = UDim2.new(1, 0, 0, 40)
-KeyTitle.Text = "ANAS HUB V22 - ENTER KEY"
+-- جێگیرکرنا وێنێ 1116.jpg وەک باکگراوند
+local BackgroundImage = Instance.new("ImageLabel")
+BackgroundImage.Name = "KeyBackgroundImg"
+BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
+BackgroundImage.Position = UDim2.new(0, 0, 0, 0)
+BackgroundImage.Image = "rbxassetid://132717834571026" -- لێرە ئایدییا وێنێ 1116.jpg هاتیە دانان
+BackgroundImage.ScaleType = Enum.ScaleType.Stretch
+BackgroundImage.BackgroundTransparency = 1
+BackgroundImage.Parent = KeyFrame
+Instance.new("UICorner", BackgroundImage).CornerRadius = UDim.new(0, 16)
+
+-- ناونیشانێ مینیۆیێ ل سەر وێنەی
+local KeyTitle = Instance.new("TextLabel", KeyFrame)
+KeyTitle.Size = UDim2.new(1, 0, 0, 35)
+KeyTitle.Position = UDim2.new(0, 0, 0, 10)
+KeyTitle.Text = "⚡ ANAS HUB PREMIUM ⚡"
 KeyTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
-KeyTitle.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
-KeyTitle.Font = Enum.Font.SourceSansBold
+KeyTitle.BackgroundTransparency = 1
+KeyTitle.Font = Enum.Font.GothamBold
 KeyTitle.TextSize = 16
-KeyTitle.Parent = KeyFrame
+KeyTitle.ZIndex = 3
 
-local TextBox = Instance.new("TextBox")
-TextBox.Size = UDim2.new(0, 240, 0, 35)
-TextBox.Position = UDim2.new(0, 30, 0, 60)
-TextBox.PlaceholderText = "Enter Key Here..."
+-- جهێ نووسینا کلیلێ (ڕێک د ناڤ دڵێ بازنێ کلیلێ دا)
+local TextBox = Instance.new("TextBox", KeyFrame)
+TextBox.Size = UDim2.new(0, 110, 0, 35) -- قەبارە گونجاو بۆ ناڤ بازنێ کلیلێ
+TextBox.Position = UDim2.new(0, 130, 0, 142) -- جهێ ڕێک ل ناو بازنێ وێنێ 1116.jpg
+TextBox.PlaceholderText = "Key..."
 TextBox.Text = ""
-TextBox.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
-TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextBox.Font = Enum.Font.SourceSans
-TextBox.TextSize = 16
-TextBox.Parent = KeyFrame
+TextBox.BackgroundColor3 = Color3.fromRGB(15, 25, 45)
+TextBox.BackgroundTransparency = 0.3 -- کێمەک ڕوون دا وێنێ پشت خۆ نەشارێتەوە
+TextBox.TextColor3 = Color3.fromRGB(0, 255, 255)
+TextBox.Font = Enum.Font.GothamBold
+TextBox.TextSize = 12
+TextBox.ZIndex = 3
+Instance.new("UICorner", TextBox).CornerRadius = UDim.new(0, 6)
 
-local SubmitBtn = Instance.new("TextButton")
-SubmitBtn.Size = UDim2.new(0, 120, 0, 35)
-SubmitBtn.Position = UDim2.new(0, 90, 0, 110)
-SubmitBtn.Text = "Check Key"
+-- دوگمەیا پشکنینێ ل خوارێ
+local SubmitBtn = Instance.new("TextButton", KeyFrame)
+SubmitBtn.Size = UDim2.new(0, 140, 0, 40)
+SubmitBtn.Position = UDim2.new(0, 155, 0, 250)
+SubmitBtn.Text = "🔓 ACCESS"
 SubmitBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
 SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-SubmitBtn.Font = Enum.Font.SourceSansBold
-SubmitBtn.TextSize = 16
-SubmitBtn.Parent = KeyFrame
+SubmitBtn.Font = Enum.Font.GothamBold
+SubmitBtn.TextSize = 14
+SubmitBtn.ZIndex = 3
+Instance.new("UICorner", SubmitBtn).CornerRadius = UDim.new(0, 8)
 
 -- ====== 👑 2. MAIN MENU ====== --
 local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 380, 0, 220)
+MainFrame.Size = UDim2.new(0, 400, 0, 280)
 MainFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
-MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
-MainFrame.Visible = false
+MainFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 18)
+MainFrame.Visible = false 
 MainFrame.Active = true
-MainFrame.Draggable = true
 MainFrame.Parent = ScreenGui
 
-local MainCorner = Instance.new("UICorner")
-MainCorner.CornerRadius = UDim.new(0, 10)
-MainCorner.Parent = MainFrame
+Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 14)
 
-local MainTitle = Instance.new("TextLabel")
-MainTitle.Size = UDim2.new(1, 0, 0, 40)
-MainTitle.Text = "ANAS HUB V22 - MAIN MENU"
-MainTitle.BackgroundColor3 = Color3.fromRGB(25, 25, 40)
-MainTitle.TextColor3 = Color3.fromRGB(0, 255, 150)
-MainTitle.Font = Enum.Font.SourceSansBold
-MainTitle.TextSize = 18
-MainTitle.Parent = MainFrame
-
--- Auto Win Button
-local AutoWinBtn = Instance.new("TextButton")
-AutoWinBtn.Size = UDim2.new(0, 320, 0, 40)
-AutoWinBtn.Position = UDim2.new(0, 30, 0, 60)
-AutoWinBtn.Text = "ACTIVATE AUTO WIN (STAGE 1-12)"
-AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
-AutoWinBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
-AutoWinBtn.Font = Enum.Font.SourceSansBold
-AutoWinBtn.TextSize = 16
-AutoWinBtn.Parent = MainFrame
-
--- WalkSpeed Button
-local SpeedBtn = Instance.new("TextButton")
-SpeedBtn.Size = UDim2.new(0, 150, 0, 40)
-SpeedBtn.Position = UDim2.new(0, 30, 0, 115)
-SpeedBtn.Text = "WalkSpeed (60)"
-SpeedBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
-SpeedBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-SpeedBtn.Font = Enum.Font.SourceSansBold
-SpeedBtn.TextSize = 14
-SpeedBtn.Parent = MainFrame
-
--- JumpPower Button
-local JumpBtn = Instance.new("TextButton")
-JumpBtn.Size = UDim2.new(0, 150, 0, 40)
-JumpBtn.Position = UDim2.new(0, 200, 0, 115)
-JumpBtn.Text = "JumpPower (120)"
-JumpBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
-JumpBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-JumpBtn.Font = Enum.Font.SourceSansBold
-JumpBtn.TextSize = 14
-JumpBtn.Parent = MainFrame
-
--- Close Button
-local CloseBtn = Instance.new("TextButton")
-CloseBtn.Size = UDim2.new(0, 90, 0, 30)
-CloseBtn.Position = UDim2.new(0, 145, 0, 175)
-CloseBtn.Text = "Close"
-CloseBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
-CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseBtn.Font = Enum.Font.SourceSans
-CloseBtn.TextSize = 14
-CloseBtn.Parent = MainFrame
-
--- ====== ⚙️ 3. LOGIC & FUNCTIONS ====== --
-SubmitBtn.MouseButton1Click:Connect(function()
-    local input = TextBox.Text
-    if AllowedKeys[input] then
-        KeyFrame:Destroy()
-        MainFrame.Visible = true
-    else
-        TextBox.Text = ""
-        TextBox.PlaceholderText = "Invalid Key!"
-    end
-end)
-
-SpeedBtn.MouseButton1Click:Connect(function()
-    local p = game.Players.LocalPlayer
-    if p.Character and p.Character:FindFirstChild("Humanoid") then
-        p.Character.Humanoid.WalkSpeed = 60
-    end
-end)
-
-JumpBtn.MouseButton1Click:Connect(function()
-    local p = game.Players.LocalPlayer
-    if p.Character and p.Character:FindFirstChild("Humanoid") then
-        p.Character.Humanoid.JumpPower = 120
-        p.Character.Humanoid.UseJumpPower = true
-    end
-end)
-
-AutoWinBtn.MouseButton1Click:Connect(function()
-    local player = game.Players.LocalPlayer
-    task.spawn(function()
-        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            for i = 1, 12 do
-                for _, v in pairs(workspace:GetDescendants()) do
-                    if v.Name == tostring(i) and v:IsA("BasePart") then
-                        player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                        task.wait(0.5)
-                        break
-                    end
-                end
-            end
-        end
-    end)
-end)
-
-CloseBtn.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
-end)
-MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
-MainFrame.Visible = false -- ل دەستپێکێ بەرزەیە هەتا کلیل ڕاست دەرکەبیت
-MainFrame.Active = true
-MainFrame.Draggable = true
-MainFrame.Parent = ScreenGui
-
-local MainCorner = Instance.new("UICorner")
-MainCorner.CornerRadius = UDim.new(0, 12)
-MainCorner.Parent = MainFrame
-
-local MainTitle = Instance.new("TextLabel")
+local MainTitle = Instance.new("TextLabel", MainFrame)
 MainTitle.Size = UDim2.new(1, 0, 0, 45)
-MainTitle.Text = "✨🔮 ANAS HUB V21 - MAIN MENU 🔮✨"
-MainTitle.BackgroundColor3 = Color3.fromRGB(20, 20, 35)
-MainTitle.TextColor3 = Color3.fromRGB(0, 255, 150)
+MainTitle.Text = "✨🔱 ANAS HUB V26 - MAIN MENU 🔱✨"
+MainTitle.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+MainTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
 MainTitle.Font = Enum.Font.GothamBold
 MainTitle.TextSize = 15
-MainTitle.Parent = MainFrame
 
--- دوگمەیا Auto Win Stage 12
-local AutoWinBtn = Instance.new("TextButton")
-AutoWinBtn.Size = UDim2.new(0, 340, 0, 45)
-AutoWinBtn.Position = UDim2.new(0, 30, 0, 70)
+local AutoWinBtn = Instance.new("TextButton", MainFrame)
+AutoWinBtn.Size = UDim2.new(0, 340, 0, 40)
+AutoWinBtn.Position = UDim2.new(0, 30, 0, 60)
 AutoWinBtn.Text = "🏆 ACTIVATE AUTO WIN (STAGE 1-12)"
-AutoWinBtn.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
+AutoWinBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 150)
 AutoWinBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
 AutoWinBtn.Font = Enum.Font.GothamBold
-AutoWinBtn.TextSize = 14
-AutoWinBtn.Parent = MainFrame
+AutoWinBtn.TextSize = 13
 
--- دوگمەیا WalkSpeed 60
-local SpeedBtn = Instance.new("TextButton")
-SpeedBtn.Size = UDim2.new(0, 160, 0, 45)
-SpeedBtn.Position = UDim2.new(0, 30, 0, 135)
+local SpeedBtn = Instance.new("TextButton", MainFrame)
+SpeedBtn.Size = UDim2.new(0, 160, 0, 40)
+SpeedBtn.Position = UDim2.new(0, 30, 0, 115)
 SpeedBtn.Text = "⚡ WalkSpeed (60)"
-SpeedBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+SpeedBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 SpeedBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedBtn.Font = Enum.Font.GothamBold
 SpeedBtn.TextSize = 13
-SpeedBtn.Parent = MainFrame
 
--- دوگمەیا JumpPower 120
-local JumpBtn = Instance.new("TextButton")
-JumpBtn.Size = UDim2.new(0, 160, 0, 45)
-JumpBtn.Position = UDim2.new(0, 210, 0, 135)
+local JumpBtn = Instance.new("TextButton", MainFrame)
+JumpBtn.Size = UDim2.new(0, 160, 0, 40)
+JumpBtn.Position = UDim2.new(0, 210, 0, 115)
 JumpBtn.Text = "🚀 JumpPower (120)"
-JumpBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+JumpBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 JumpBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 JumpBtn.Font = Enum.Font.GothamBold
 JumpBtn.TextSize = 13
-JumpBtn.Parent = MainFrame
 
--- دوگمەیا داخستنێ
-local CloseBtn = Instance.new("TextButton")
+local InfJumpBtn = Instance.new("TextButton", MainFrame)
+InfJumpBtn.Size = UDim2.new(0, 340, 0, 40)
+InfJumpBtn.Position = UDim2.new(0, 30, 0, 170)
+InfJumpBtn.Text = "🌌 TOGGLE INFINITE JUMP: OFF"
+InfJumpBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+InfJumpBtn.TextColor3 = Color3.fromRGB(0, 255, 150)
+InfJumpBtn.Font = Enum.Font.GothamBold
+InfJumpBtn.TextSize = 13
+
+local CloseBtn = Instance.new("TextButton", MainFrame)
 CloseBtn.Size = UDim2.new(0, 100, 0, 30)
-CloseBtn.Position = UDim2.new(0, 150, 0, 200)
-CloseBtn.Text = "❌ Close"
-CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+CloseBtn.Position = UDim2.new(0, 150, 0, 230)
+CloseBtn.Text = "❌ Close Hub"
+CloseBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
 CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 CloseBtn.Font = Enum.Font.Gotham
 CloseBtn.TextSize = 12
-CloseBtn.Parent = MainFrame
 
--- ====== ⚙️ ٣. لۆجیک و فرمانێن کایێ (Functions) ====== --
+-- ====== 📱 3. TOGGLE BUTTON BUTTON ====== --
+local ToggleBtn = Instance.new("TextButton")
+ToggleBtn.Size = UDim2.new(0, 60, 0, 60)
+ToggleBtn.Position = UDim2.new(0.02, 0, 0.4, 0)
+ToggleBtn.Text = "ANAS"
+ToggleBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 22)
+ToggleBtn.TextColor3 = Color3.fromRGB(0, 255, 255)
+ToggleBtn.Font = Enum.Font.GothamBold
+ToggleBtn.TextSize = 12
+ToggleBtn.Visible = false
+ToggleBtn.Parent = ScreenGui
+Instance.new("UICorner", ToggleBtn).CornerRadius = UDim.new(0, 30)
+
+-- ====== ⚙️ 4. LOGIC & FUNCTIONS ====== --
+local function MakeDraggable(frame)
+    local UserInputService = game:GetService("UserInputService")
+    local dragging, dragInput, dragStart, startPos
+    frame.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true dragStart = input.Position startPos = frame.Position
+            input.Changed:Connect(function() if input.UserInputState == Enum.UserInputState.End then dragging = false end end)
+        end
+    end)
+    frame.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then dragInput = input end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end)
+end
+MakeDraggable(KeyFrame)
+MakeDraggable(MainFrame)
+MakeDraggable(ToggleBtn)
+
 SubmitBtn.MouseButton1Click:Connect(function()
-    local input = TextBox.Text
-    if AllowedKeys[input] then
-        KeyFrame:Destroy() -- لادانا پەنجەرەیا کلیلێ
-        MainFrame.Visible = true -- ڤەکرنا مینیۆیا سەرەکی
+    if AllowedKeys[TextBox.Text] then
+        KeyFrame:Destroy()
+        MainFrame.Visible = true
+        ToggleBtn.Visible = true
     else
         TextBox.Text = ""
-        TextBox.PlaceholderText = "کلیل خەلەتە! (Wrong Key)"
+        TextBox.PlaceholderText = "Wrong!"
     end
+end)
+
+ToggleBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = not MainFrame.Visible
 end)
 
 SpeedBtn.MouseButton1Click:Connect(function()
-    local p = game.Players.LocalPlayer
-    if p.Character and p.Character:FindFirstChild("Humanoid") then
-        p.Character.Humanoid.WalkSpeed = 60
-    end
+    pcall(function() game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60 end)
 end)
 
 JumpBtn.MouseButton1Click:Connect(function()
-    local p = game.Players.LocalPlayer
-    if p.Character and p.Character:FindFirstChild("Humanoid") then
-        p.Character.Humanoid.JumpPower = 120
-        p.Character.Humanoid.UseJumpPower = true
+    pcall(function() 
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120 
+        game.Players.LocalPlayer.Character.Humanoid.UseJumpPower = true 
+    end)
+end)
+
+local InfiniteJumpEnabled = false
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if InfiniteJumpEnabled then
+        pcall(function() game.Players.LocalPlayer.Character.Humanoid:ChangeState("Jumping") end)
+    end
+end)
+
+InfJumpBtn.MouseButton1Click:Connect(function()
+    InfiniteJumpEnabled = not InfiniteJumpEnabled
+    if InfiniteJumpEnabled then
+        InfJumpBtn.Text = "🌌 TOGGLE INFINITE JUMP: ON"
+        InfJumpBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+    else
+        InfJumpBtn.Text = "🌌 TOGGLE INFINITE JUMP: OFF"
+        InfJumpBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
     end
 end)
 
 AutoWinBtn.MouseButton1Click:Connect(function()
-    local player = game.Players.LocalPlayer
     task.spawn(function()
-        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        pcall(function()
+            local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
             for i = 1, 12 do
                 for _, v in pairs(workspace:GetDescendants()) do
                     if v.Name == tostring(i) and v:IsA("BasePart") then
-                        player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                        task.wait(0.5)
+                        hrp.CFrame = v.CFrame + Vector3.new(0, 3, 0)
+                        task.wait(0.4)
                         break
                     end
                 end
             end
-        end
-    end)
-end)
-
-CloseBtn.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
-end)
-    t2.TextSize = 15
-    
-    local b_win = Instance.new("TextButton", f2)
-    b_win.Size = UDim2.new(0, 340, 0, 45)
-    b_win.Position = UDim2.new(0, 30, 0, 70)
-    b_win.Text = "🏆 ACTIVATE AUTO WIN (STAGE 1-12)"
-    b_win.BackgroundColor3 = Color3.fromRGB(255, 170, 0)
-    b_win.TextColor3 = Color3.fromRGB(0, 0, 0)
-    b_win.Font = Enum.Font.GothamBold
-    b_win.TextSize = 14
-    
-    local b_spd = Instance.new("TextButton", f2)
-    b_spd.Size = UDim2.new(0, 160, 0, 45)
-    b_spd.Position = UDim2.new(0, 30, 0, 135)
-    b_spd.Text = "⚡ WalkSpeed (60)"
-    b_spd.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
-    b_spd.TextColor3 = Color3.fromRGB(255, 255, 255)
-    b_spd.Font = Enum.Font.GothamBold
-    b_spd.TextSize = 13
-    
-    local b_jmp = Instance.new("TextButton", f2)
-    b_jmp.Size = UDim2.new(0, 160, 0, 45)
-    b_jmp.Position = UDim2.new(0, 210, 0, 135)
-    b_jmp.Text = "🚀 JumpPower (120)"
-    b_jmp.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
-    b_jmp.TextColor3 = Color3.fromRGB(255, 255, 255)
-    b_jmp.Font = Enum.Font.GothamBold
-    b_jmp.TextSize = 13
-    
-    local b_cls = Instance.new("TextButton", f2)
-    b_cls.Size = UDim2.new(0, 100, 0, 30)
-    b_cls.Position = UDim2.new(0, 150, 0, 200)
-    b_cls.Text = "❌ Close"
-    b_cls.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-    b_cls.TextColor3 = Color3.fromRGB(255, 255, 255)
-    b_cls.Font = Enum.Font.Gotham
-    b_cls.TextSize = 12
-
-    local keys = {["ANAS_VIP_999"]=true,["ANAS_PREMIUM_5USD"]=true,["KEY_2026_ANAS"]=true}
-    sub.MouseButton1Click:Connect(function()
-        if keys[box.Text] then f1:Destroy() f2.Visible = true else box.Text = "" box.PlaceholderText = "Wrong Key!" end
-    end)
-    b_spd.MouseButton1Click:Connect(function() pcall(function() game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60 end) end)
-    b_jmp.MouseButton1Click:Connect(function() pcall(function() game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120 game.Players.LocalPlayer.Character.Humanoid.UseJumpPower = true end) end)
-    b_win.MouseButton1Click:Connect(function()
-        task.spawn(function()
-            pcall(function()
-                local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
-                for i = 1, 12 do
-                    for _, v in pairs(workspace:GetDescendants()) do
-                        if v.Name == tostring(i) and v:IsA("BasePart") then
-                            hrp.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                            task.wait(0.5)
-                            break
-                        end
-                    end
-                end
-            end)
         end)
-    end)
-    b_cls.MouseButton1Click:Connect(function() scr:Destroy() end)
-end)
-SpeedBtn.TextSize = 13
-SpeedBtn.Parent = MainFrame
-
--- دوگمەیا JumpPower 120
-local JumpBtn = Instance.new("TextButton")
-JumpBtn.Size = UDim2.new(0, 160, 0, 45)
-JumpBtn.Position = UDim2.new(0, 210, 0, 135)
-JumpBtn.Text = "🚀 JumpPower (120)"
-JumpBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
-JumpBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-JumpBtn.Font = Enum.Font.GothamBold
-JumpBtn.TextSize = 13
-JumpBtn.Parent = MainFrame
-
--- دوگمەیا داخستنێ
-local CloseBtn = Instance.new("TextButton")
-CloseBtn.Size = UDim2.new(0, 100, 0, 30)
-CloseBtn.Position = UDim2.new(0, 150, 0, 200)
-CloseBtn.Text = "❌ Close"
-CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseBtn.Font = Enum.Font.Gotham
-CloseBtn.TextSize = 12
-CloseBtn.Parent = MainFrame
-
--- ====== ⚙️ ٣. لۆجیک و فرمانێن کایێ (Functions) ====== --
-SubmitBtn.MouseButton1Click:Connect(function()
-    local input = TextBox.Text
-    if AllowedKeys[input] then
-        KeyFrame:Destroy() -- لادانا پەنجەرەیا کلیلێ
-        MainFrame.Visible = true -- ڤەکرنا مینیۆیا سەرەکی
-    else
-        TextBox.Text = ""
-        TextBox.PlaceholderText = "کلیل خەلەتە! (Wrong Key)"
-    end
-end)
-
-SpeedBtn.MouseButton1Click:Connect(function()
-    local p = game.Players.LocalPlayer
-    if p.Character and p.Character:FindFirstChild("Humanoid") then
-        p.Character.Humanoid.WalkSpeed = 60
-    end
-end)
-
-JumpBtn.MouseButton1Click:Connect(function()
-    local p = game.Players.LocalPlayer
-    if p.Character and p.Character:FindFirstChild("Humanoid") then
-        p.Character.Humanoid.JumpPower = 120
-        p.Character.Humanoid.UseJumpPower = true
-    end
-end)
-
-AutoWinBtn.MouseButton1Click:Connect(function()
-    local player = game.Players.LocalPlayer
-    task.spawn(function()
-        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            for i = 1, 12 do
-                for _, v in pairs(workspace:GetDescendants()) do
-                    if v.Name == tostring(i) and v:IsA("BasePart") then
-                        player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                        task.wait(0.5)
-                        break
-                    end
-                end
-            end
-        end
     end)
 end)
 
