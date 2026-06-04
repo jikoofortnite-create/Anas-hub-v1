@@ -1,5 +1,5 @@
--- [[ ANAS HUB V27.1 - ULTIMATE MULTI-GAME & ESP EDITION ]] --
--- [[ SUPPORTED: KEYBOARD ESCAPE | BROOKHAVEN | VIOLENCE DISTRICT ]] --
+-- [[ ANAS HUB V27.2 - SMART VIOLENCE DISTRICT UPDATE ]] --
+-- [[ TEAM GREEN / KNIFE RED ESP + LEGIT AUTO-WALK KILL AURA ]] --
 
 if game:GetService("CoreGui"):FindFirstChild("AnasHubPremium") then
     game:GetService("CoreGui").AnasHubPremium:Destroy()
@@ -60,7 +60,7 @@ Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 14)
 
 local MainTitle = Instance.new("TextLabel", MainFrame)
 MainTitle.Size = UDim2.new(1, 0, 0, 45)
-MainTitle.Text = "✨🔱 ANAS HUB V27.1 - ULTIMATE MENU 🔱✨"
+MainTitle.Text = "✨🔱 ANAS HUB V27.2 - SMART EDITION 🔱✨"
 MainTitle.BackgroundColor3 = Color3.fromRGB(18, 18, 26)
 MainTitle.TextColor3 = Color3.fromRGB(0, 255, 255)
 MainTitle.Font = Enum.Font.GothamBold
@@ -136,17 +136,17 @@ Instance.new("UICorner", RobBankBtn).CornerRadius = UDim.new(0, 8)
 local KillAuraBtn = Instance.new("TextButton", Tab3)
 KillAuraBtn.Size = UDim2.new(1, -20, 0, 42)
 KillAuraBtn.Position = UDim2.new(0, 10, 0, 20)
-KillAuraBtn.Text = "⚔️ ACTIVATE KILL AURA"
+KillAuraBtn.Text = "⚔️ LEGIT AUTO-WALK KILL (NEED KNIFE)"
 KillAuraBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
 KillAuraBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 KillAuraBtn.Font = Enum.Font.GothamBold
-KillAuraBtn.TextSize = 12
+KillAuraBtn.TextSize = 11
 Instance.new("UICorner", KillAuraBtn).CornerRadius = UDim.new(0, 8)
 
 local EspBtn = Instance.new("TextButton", Tab3)
 EspBtn.Size = UDim2.new(1, -20, 0, 42)
 EspBtn.Position = UDim2.new(0, 10, 0, 75)
-EspBtn.Text = "👁️ ACTIVATE ENEMY ESP (WALLHACK)"
+EspBtn.Text = "👁️ SMART ESP (GREEN/RED KNIFE)"
 EspBtn.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
 EspBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 EspBtn.Font = Enum.Font.GothamBold
@@ -251,22 +251,51 @@ RobBankBtn.MouseButton1Click:Connect(function()
     end)
 end)
 
--- [ 💥 VIOLENCE DISTRICT: KILL AURA LOGIC ] --
-local KillAuraEnabled = false
+-- [ 💥 VIOLENCE DISTRICT: SMART LEGIT AUTO-WALK KILL AURA ] --
+local LegitKillActive = false
 KillAuraBtn.MouseButton1Click:Connect(function()
-    if KillAuraEnabled then KillAuraEnabled = false KillAuraBtn.Text = "⚔️ ACTIVATE KILL AURA" return end
-    KillAuraEnabled = true KillAuraBtn.Text = "🛑 KILL AURA ACTIVE"
+    if LegitKillActive then 
+        LegitKillActive = false 
+        KillAuraBtn.Text = "⚔️ LEGIT AUTO-WALK KILL (NEED KNIFE)" 
+        return 
+    end
+    
+    LegitKillActive = true 
+    KillAuraBtn.Text = "🛑 LEGIT AUTO-KILL ACTIVE"
+    
     task.spawn(function()
-        while KillAuraEnabled do
-            task.wait(0.2)
+        while LegitKillActive do
+            task.wait(0.3)
             pcall(function()
                 local localPlayer = game.Players.LocalPlayer
-                for _, player in pairs(game.Players:GetPlayers()) do
-                    if player ~= localPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                        local dist = (player.Character.HumanoidRootPart.Position - localPlayer.Character.HumanoidRootPart.Position).Magnitude
-                        if dist < 25 then
-                            local tool = localPlayer.Character:FindFirstChildOfClass("Tool")
-                            if tool then tool:Activate() end
+                local myChar = localPlayer.Character
+                local myHrp = myChar and myChar:FindFirstChild("HumanoidRootPart")
+                local myHum = myChar and myChar:FindFirstChildOfClass("Humanoid")
+                
+                -- سکرێپت تەنێ کاتێ دەست پێ دکات کو کێر د دەستێ تە دابیت
+                local knife = myChar and (myChar:FindFirstChild("Knife") or myChar:FindFirstChildOfClass("Tool"))
+                
+                if myHrp and myHum and knife and LegitKillActive then
+                    local closestEnemy = nil
+                    local shortestDistance = 350 -- مەودایێ گەڕیانێ ل سەر نەخشەیی
+                    
+                    for _, player in pairs(game.Players:GetPlayers()) do
+                        if player ~= localPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player.Character:FindFirstChildOfClass("Humanoid").Health > 0 then
+                            local dist = (player.Character.HumanoidRootPart.Position - myHrp.Position).Magnitude
+                            if dist < shortestDistance then
+                                shortestDistance = dist
+                                closestEnemy = player.Character
+                            end
+                        end
+                    end
+                    
+                    -- لڤین بەرەو ڕووی دوژمنی ب شێوازێ مەشیا نەرم (Legit Path Walk) بێ کو کەس حەس بکەت
+                    if closestEnemy and LegitKillActive then
+                        myHum:MoveTo(closestEnemy.HumanoidRootPart.Position)
+                        
+                        -- ئەگەر گەهشتە نێزیک وێ ئێکسەر لێدەدات
+                        if shortestDistance < 12 then
+                            knife:Activate()
                         end
                     end
                 end
@@ -275,58 +304,77 @@ KillAuraBtn.MouseButton1Click:Connect(function()
     end)
 end)
 
--- [ 💥 VIOLENCE DISTRICT: ESP WALLHACK LOGIC ] --
-local EspEnabled = false
-local function ApplyESP(player)
+-- [ 💥 VIOLENCE DISTRICT: SMART GREEN/RED ESP LOGIC ] --
+local SmartEspActive = false
+
+local function IsHoldingKnife(player)
+    if not player.Character then return false end
+    -- پشکنین کا ئەرێ کێر د دەست دایە یان د باکپاکێ دایە
+    if player.Character:FindFirstChild("Knife") or player.Character:FindFirstChildOfClass("Tool") or (player:FindFirstChild("Backpack") and player.Backpack:FindFirstChild("Knife")) then
+        return true
+    end
+    return false
+end
+
+local function ApplySmartESP(player)
     if player == game.Players.LocalPlayer then return end
     
-    local function CreateHighlight()
-        if player.Character then
-            -- ئەگەر پێشتر هێلایت هەبیت لایدەبەین بۆ نوێکردنەوە
-            if player.Character:FindFirstChild("AnasHubESP") then
-                player.Character.AnasHubESP:Destroy()
-            end
-            
-            local Highlight = Instance.new("Highlight")
-            Highlight.Name = "AnasHubESP"
-            Highlight.FillColor = Color3.fromRGB(255, 0, 100)
-            Highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
-            Highlight.FillTransparency = 0.4
-            Highlight.OutlineTransparency = 0
-            Highlight.Adornee = player.Character
-            Highlight.Parent = player.Character
+    task.spawn(function()
+        while SmartEspActive and player.Character and task.wait(1) do
+            pcall(function()
+                if player.Character then
+                    local highlight = player.Character:FindFirstChild("AnasHubSmartESP")
+                    if not highlight then
+                        highlight = Instance.new("Highlight")
+                        highlight.Name = "AnasHubSmartESP"
+                        highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+                        highlight.OutlineTransparency = 0
+                        highlight.Adornee = player.Character
+                        highlight.Parent = player.Character
+                    end
+                    
+                    -- گۆڕینا ڕەنگی ل سەر بنەمایێ هەبوونا کێرێ
+                    if IsHoldingKnife(player) then
+                        highlight.FillColor = Color3.fromRGB(255, 0, 0) -- سۆر بۆ ئەوان کۆ کێر هەیە
+                        highlight.FillTransparency = 0.3
+                    else
+                        highlight.FillColor = Color3.fromRGB(0, 255, 100) -- کەسک بۆ یاریزانێن عادی
+                        highlight.FillTransparency = 0.5
+                    end
+                end
+            end)
         end
-    end
-    
-    CreateHighlight()
-    player.CharacterAdded:Connect(function()
-        task.wait(0.5)
-        if EspEnabled then CreateHighlight() end
     end)
 end
 
 EspBtn.MouseButton1Click:Connect(function()
-    if EspEnabled then
-        EspEnabled = false
-        EspBtn.Text = "👁️ ACTIVATE ENEMY ESP (WALLHACK)"
+    if SmartEspActive then
+        SmartEspActive = false
+        EspBtn.Text = "👁️ SMART ESP (GREEN/RED KNIFE)"
         EspBtn.BackgroundColor3 = Color3.fromRGB(170, 0, 255)
-        -- لادانی ئێچ ئێس پی ل سەر هەمی کارەکتەران
         for _, player in pairs(game.Players:GetPlayers()) do
-            if player.Character and player.Character:FindFirstChild("AnasHubESP") then
-                player.Character.AnasHubESP:Destroy()
+            if player.Character and player.Character:FindFirstChild("AnasHubSmartESP") then
+                player.Character.AnasHubSmartESP:Destroy()
             end
         end
     else
-        EspEnabled = true
-        EspBtn.Text = "🛑 ESP ACTIVE (WALLHACK ON)"
+        SmartEspActive = true
+        EspBtn.Text = "🛑 SMART ESP ACTIVE (ON)"
         EspBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
         
-        -- جێبەجێکردن ل سەر یاریزانێن نوکە هەیی
         for _, player in pairs(game.Players:GetPlayers()) do
-            ApplyESP(player)
+            ApplySmartESP(player)
+            player.CharacterAdded:Connect(function()
+                task.wait(0.5)
+                if SmartEspActive then ApplySmartESP(player) end
+            end)
         end
         
-        -- جێبەجێکردن ل سەر هەر یاریزانەکێ نوو یێ دێتە د کایێ دا
-        game.Players.PlayerAdded:Connect(ApplyESP)
+        game.Players.PlayerAdded:Connect(function(player)
+            player.CharacterAdded:Connect(function()
+                task.wait(0.5)
+                if SmartEspActive then ApplySmartESP(player) end
+            end)
+        end)
     end
 end)
