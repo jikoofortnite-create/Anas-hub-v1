@@ -1,28 +1,105 @@
--- [[ ANAS HUB V9 - RAYFIELD GALAXY THEME ]] --
+-- [[ ANAS HUB V11 - DISCORD NITRO + AUTO WIN STAGE 12 ]] --
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "👑 ANAS HUB V9 - KEYBOARD ESCAPE 👑",
-   LoadingTitle = "Anas Hub Loaded",
-   LoadingSubtitle = "by Anas",
-   Theme = "Ocean", -- ئەڤ تێمە بخۆ ڕەنگەکێ گەلەک لاو یێ شین و ڕەش یێ وەک وێنێ تە یێ ستێران ددەتە مینیۆیێ!
+   Name = "✨🔮 ANAS HUB V11 - KEYBOARD ESCAPE 🔮✨",
+   LoadingTitle = "🔥 AUTO WIN ENGINE ACTIVATED 🔥",
+   LoadingSubtitle = "👑 Created by Anas 👑",
+   Theme = "Ocean",
    DisableRayfieldPrompts = false,
    DisableBuildWarnings = false,
    ConfigurationSaving = {
       Enabled = true,
       FolderName = "AnasHubConfig",
-      FileName = "BigHub"
+      FileName = "NitroAutoWin"
    }
 })
 
 -----------------------------------------------------------
--- [ ١. بەشێ یاریزانی - PLAYER TAB ] --
+-- [ 🏆 بەشێ نوو: خۆکار سەرکەفتن - NITRO AUTO WIN ] --
 -----------------------------------------------------------
-local PlayerTab = Window:CreateTab("👤 Player", 4483345998) -- Title, Image
+local AutoWinTab = Window:CreateTab("🏆 NITRO AUTO WIN", 4483345998)
 
-local SpeedButton = PlayerTab:CreateButton({
-   Name = "⚡ Set WalkSpeed (60)",
-   Interact = 'Click',
+-- فەرمانا کلیلکرنێ بۆ تێلەپۆرت بوونا ڕاستەوخۆ بۆ ستەیجێ ١٢
+AutoWinTab:CreateButton({
+   Name = "✨ ┃ INSTANT TELEPORT TO STAGE 12",
+   Interact = '🔮 WARP 🔮',
+   Callback = function()
+        local player = game.Players.LocalPlayer
+        -- دۆزینەوەیا پارتێ ستەیجێ ١٢ د ناڤ ماپێ یاریێ دا
+        local stage12 = workspace:FindFirstChild("12") or workspace:FindFirstChild("Stage12") or workspace.Stages:FindFirstChild("12")
+        
+        if stage12 and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            player.Character.HumanoidRootPart.CFrame = stage12.CFrame + Vector3.new(0, 3, 0)
+            Rayfield:Notify({
+               Title = "ANAS HUB",
+               Content = "Successfully Teleported to Stage 12! 👑",
+               Duration = 3,
+               Image = 4483345998,
+            })
+        else
+            -- ئەگەر ناڤێ پارتێ ١٢ جیاواز بوو، سیستەم دێ ب ڕێکا گەڕیانێ دۆزیتەوە
+            local found = false
+            for _, v in pairs(workspace:GetDescendants()) do
+                if v.Name == "12" and v:IsA("BasePart") then
+                    player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
+                    found = true
+                    break
+                end
+            end
+            if not found then
+                Rayfield:Notify({Title = "ANAS HUB", Content = "Stage 12 part not found, try moving closer!", Duration = 3})
+            end
+        end
+   end,
+})
+
+-- فەرمانا ئۆتۆماتیک سەرکەفتن د ناڤبەرا ستەیجان دا (Loop)
+local autowinning = false
+AutoWinTab:CreateToggle({
+   Name = "🔥 ┃ AUTO WIN LOOP (STAGES 1 TO 12)",
+   CurrentValue = false,
+   Flag = "AutoWinLoopFlag",
+   Callback = function(Value)
+        autowinning = Value
+        task.spawn(function()
+            while autowinning do
+                local player = game.Players.LocalPlayer
+                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                    -- سیستەم دێ ژ ستەیجێ ١ دەستپێکەت هەتا ١٢
+                    for i = 1, 12 do
+                        if not autowinning then break end
+                        
+                        local targetStage = workspace:FindFirstChild(tostring(i)) or workspace.Stages:FindFirstChild(tostring(i))
+                        if targetStage and targetStage:IsA("BasePart") then
+                            player.Character.HumanoidRootPart.CFrame = targetStage.CFrame + Vector3.new(0, 3, 0)
+                            task.wait(0.5) -- دەمێ چەرمەسەریێ د ناڤبەرا ستەیجان دا دا یاری کراش نەکەت
+                        else
+                            -- گەڕیانا گشتی ئەگەر د فۆڵدەرەکێ دی دا بن
+                            for _, v in pairs(workspace:GetDescendants()) do
+                                if v.Name == tostring(i) and v:IsA("BasePart") then
+                                    player.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
+                                    task.wait(0.5)
+                                    break
+                                end
+                            end
+                        end
+                    end
+                end
+                task.wait(1)
+            end
+        end)
+   end,
+})
+
+-----------------------------------------------------------
+-- [ 🚀 بەشێ یاریزانی - NITRO PLAYER TAB ] --
+-----------------------------------------------------------
+local PlayerTab = Window:CreateTab("🚀 SPEED & POWER", 4483345998)
+
+PlayerTab:CreateButton({
+   Name = "⚡ ┃ ACTIVATE NITRO SPEED (60)",
+   Interact = '💥 CLICK 💥',
    Callback = function()
         if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60
@@ -30,9 +107,9 @@ local SpeedButton = PlayerTab:CreateButton({
    end,
 })
 
-local JumpButton = PlayerTab:CreateButton({
-   Name = "🚀 Set JumpPower (120)",
-   Interact = 'Click',
+PlayerTab:CreateButton({
+   Name = "🌌 ┃ HYPER JUMP POWER (120)",
+   Interact = '💥 CLICK 💥',
    Callback = function()
         if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
             game.Players.LocalPlayer.Character.Humanoid.JumpPower = 120
@@ -42,10 +119,10 @@ local JumpButton = PlayerTab:CreateButton({
 })
 
 local noclip = false
-local NoclipToggle = PlayerTab:CreateToggle({
-   Name = "👻 Toggle Noclip (Wall Hack)",
+PlayerTab:CreateToggle({
+   Name = "👻 ┃ GOD-MODE NOCLIP (WALL HACK)",
    CurrentValue = false,
-   Flag = "NoclipFlag",
+   Flag = "NitroNoclip",
    Callback = function(Value)
         noclip = Value
         game:GetService("RunService").Stepped:Connect(function()
@@ -59,28 +136,13 @@ local NoclipToggle = PlayerTab:CreateToggle({
 })
 
 -----------------------------------------------------------
--- [ ٢. بەشێ تێلەپۆرتێ - TELEPORT TAB ] --
+-- [ 🤖 بەشێ پاراستنێ - ANTI-BAN SECURE ] --
 -----------------------------------------------------------
-local TeleportTab = Window:CreateTab("📍 Teleports", 4483345998)
+local AutoTab = Window:CreateTab("🛡️ ANTI-BAN SECURE", 4483345998)
 
-local LobbyButton = TeleportTab:CreateButton({
-   Name = "🏠 Teleport to Lobby",
-   Interact = 'Click',
-   Callback = function()
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 0) 
-        end
-   end,
-})
-
------------------------------------------------------------
--- [ ٣. بەشێ خۆکار - AUTOMATION ] --
------------------------------------------------------------
-local AutoTab = Window:CreateTab("🤖 Automation", 4483345998)
-
-local AntiAfkButton = AutoTab:CreateButton({
-   Name = "🛡️ Activate Anti-AFK (Anti-Kick)",
-   Interact = 'Click',
+AutoTab:CreateButton({
+   Name = "💎 ┃ ACTIVATE ANTI-AFK (ANTI-KICK)",
+   Interact = '🔒 SECURE 🔒',
    Callback = function()
         local vu = game:GetService("VirtualUser")
         game.Players.LocalPlayer.Idled:Connect(function()
@@ -90,127 +152,3 @@ local AntiAfkButton = AutoTab:CreateButton({
         end)
    end,
 })
-    end    
-})
-
-local noclip = false
-PlayerTab:AddToggle({
-    Name = "👻 Toggle Noclip (Wall Hack)",
-    Default = false,
-    Callback = function(Value)
-        noclip = Value
-        game:GetService("RunService").Stepped:Connect(function()
-            if noclip and game.Players.LocalPlayer.Character then
-                for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                    if v:IsA("BasePart") then v.CanCollide = false end
-                end
-            end
-        end)
-    end
-})
-
------------------------------------------------------------
--- [ ٢. بەشێ تێلەپۆرتێ - TELEPORT TAB ] --
------------------------------------------------------------
-local TeleportTab = Window:MakeTab({
-    Name = "📍 Teleports",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
-
-TeleportTab:AddButton({
-    Name = "🏠 Teleport to Lobby",
-    Callback = function()
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 0) 
-        end
-    end    
-})
-
------------------------------------------------------------
--- [ ٣. بەشێ خۆکار - AUTOMATION ] --
------------------------------------------------------------
-local AutoTab = Window:MakeTab({
-    Name = "🤖 Automation",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
-
-AutoTab:AddButton({
-    Name = "🛡️ Activate Anti-AFK (Anti-Kick)",
-    Callback = function()
-        local vu = game:GetService("VirtualUser")
-        game.Players.LocalPlayer.Idled:Connect(function()
-            vu:Button2Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
-            task.wait(1)
-            vu:Button2Up(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
-        end)
-    end    
-})
-
-OrionLib:Init()
-            background: #00ff7f;
-            color: #121216;
-            box-shadow: 0px 0px 15px #00ff7f;
-            transform: scale(1.03);
-        }
-    </style>
-</head>
-<body>
-
-    <h1>👑 ANAS HUB HYBRID V5 👑</h1>
-    <p style="color: #888;">Rendered with HTML & CSS inside Roblox</p>
-
-    <div class="btn-container">
-        <!-- دوگمەیێن دروستکری ب HTML -->
-        <button class="modern-btn" onclick="triggerRoblox('SPEED')">⚡ ACTIVATE SPEED HACK (60)</button>
-        <button class="modern-btn" onclick="triggerRoblox('JUMP')">🚀 ACTIVATE SUPER JUMP (120)</button>
-        <button class="modern-btn" onclick="triggerRoblox('CLOSE')">❌ CLOSE HYBRID MENU</button>
-    </div>
-
-    <!-- زمانێ سێیێ (JavaScript): بۆ کۆنترۆڵکرنا لڤین و گواستنەوەیا فەرمانان بۆ لایێ کایێ -->
-    <script>
-        function triggerRoblox(commandType) {
-            // ئەڤ فەرمانا JS نامەیەکێ بۆ هێلا ناڤخۆیا کایێ فرێکەت
-            window.CreateRobloxEvent(commandType);
-        }
-    </script>
-
-</body>
-</html>
-]]
-
--- دروستکرنا ناڤۆکا نیشاندانا دەقی و ویب وێ د ناڤ ڕۆبلۆکس دا
-local HtmlView = Instance.new("TextLabel") -- وەک نموونە هاتییە دیزاینکرن دا کۆد نەشکێت
-HtmlView.Size = UDim2.new(1, -20, 1, -20)
-HtmlView.Position = UDim2.new(0, 10, 0, 10)
-HtmlView.BackgroundTransparency = 1
-HtmlView.Text = "🌐 Hybrid Engine (Lua + HTML + CSS + JS) Active!"
-HtmlView.TextColor3 = Color3.fromRGB(0, 255, 127)
-HtmlView.Font = Enum.Font.GothamBold
-HtmlView.TextSize = 14
-HtmlView.Parent = MainFrame
-
--- [[ سیستەمێ گرێدانا فەرمانێن JavaScript دگەل Lua ]] --
-local function handleJsEvent(command)
-    local player = game.Players.LocalPlayer
-    local char = player.Character
-    if not char or not char:FindFirstChild("Humanoid") then return end
-
-    if command == "SPEED" then
-        char.Humanoid.WalkSpeed = 60
-    elseif command == "JUMP" then
-        char.Humanoid.JumpPower = 120
-        char.Humanoid.UseJumpPower = true
-    elseif command == "CLOSE" then
-        ScreenGui:Destroy()
-    end
-end
-
--- ئەڤ فەرمانا ل خوارێ (Bridge) د جیهانا ڕاستەقینە دا پەیوەندیێ د دەتە کارلێکرنا JS
--- بۆ نموونە کاتێ یاریزان کلیکێ ل دوگمەکا HTML دکەت:
-MainFrame.MouseEnter:Connect(function()
-    -- ل ڤێرە لایەنێ Lua هەمیشە یێ بەرهەڤە بۆ وەرگرتنا فەرمانێن ژ لایێ JavaScript دهێن
-    local fakeJsBridge = "SPEED" -- نموونەیەکا جێبەجێکرنێ
-    handleJsEvent(fakeJsBridge)
-end)
